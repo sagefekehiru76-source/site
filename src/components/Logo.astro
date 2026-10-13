@@ -1,0 +1,15 @@
+---
+// Wordmark placeholder. TODO: swap for the real logo (SVG) when it's ready.
+interface Props { class?: string; dark?: boolean }
+const { class: cls = '', dark = false } = Astro.props;
+---
+<span class:list={['inline-flex items-center gap-2.5', cls]}>
+  <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+    <rect width="64" height="64" rx="14" fill={dark ? '#2C3650' : '#1D2433'} />
+    <rect y="22" width="64" height="7" fill="#A9472A" />
+    <rect y="29" width="64" height="6" fill="#D6A137" />
+    <rect y="35" width="64" height="7" fill="#A9472A" />
+    <rect x="22" y="14" width="20" height="36" rx="3" fill="none" stroke="#F3ECE0" stroke-width="4" />
+  </svg>
+  <span class="font-display text-xl leading-none tracking-tight">LaunchOn<span class={dark ? 'text-mustard' : 'text-terra'}>Nato</span></span>
+</span>

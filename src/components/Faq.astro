@@ -1,0 +1,31 @@
+---
+import T from './T.astro';
+import Icon from './Icon.astro';
+import { t, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const d = t(Astro.props.lang).faq;
+---
+<section id="faq" class="border-t border-line bg-paper py-20 sm:py-28" aria-labelledby="faq-title">
+  <div class="wrap grid gap-10 lg:grid-cols-12">
+    <div class="lg:col-span-4" data-reveal>
+      <div class="lg:sticky lg:top-24">
+        <p class="eyebrow">{d.eyebrow}</p>
+        <h2 id="faq-title" class="mt-4 text-4xl sm:text-5xl">{d.title}</h2>
+        <p class="mt-6 text-ink-soft">{d.more} <a href="#quote" class="link text-ink">{d.moreLink}</a>.</p>
+      </div>
+    </div>
+    <div class="lg:col-span-8">
+      {d.items.map((item) => (
+        <details class="group border-b border-line first:border-t">
+          <summary class="flex cursor-pointer items-start justify-between gap-6 py-5 text-xl hover:text-terra sm:text-2xl">
+            <span class="font-display">{item.q}</span>
+            <span class="faq-plus mt-1 shrink-0 text-terra transition-transform duration-200"><Icon name="plus" size={22} /></span>
+          </summary>
+          <div class="max-w-2xl space-y-3 pb-6 text-ink-soft">
+            {item.a.map((p) => <p><T v={p} /></p>)}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

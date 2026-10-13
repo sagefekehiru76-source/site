@@ -1,0 +1,5 @@
+---
+interface Props { class?: string; thin?: boolean }
+const { class: cls = '', thin = false } = Astro.props;
+---
+<div aria-hidden="true" class:list={[thin ? 'tape-thin h-1.5' : 'tape h-4 sm:h-5', cls]}></div>

@@ -1,0 +1,85 @@
+---
+import '@fontsource/young-serif/400.css';
+import '@fontsource-variable/instrument-sans/wght.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+import { t, localePath, type Lang } from '../i18n';
+import { site } from '../config';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  /** page path without language prefix, e.g. "" or "thanks/" — used for hreflang */
+  path?: string;
+  noindex?: boolean;
+}
+
+const { lang, path = '', noindex = false } = Astro.props;
+const d = t(lang);
+const title = Astro.props.title ?? d.meta.title;
+const description = Astro.props.description ?? d.meta.description;
+const base = Astro.site ?? new URL(site.url);
+const canonical = new URL(localePath(lang, path), base).href;
+const ogImage = new URL('/images/og-image.jpg', base).href;
+const alternates = (['en', 'tr'] as const).map((l) => ({ l, href: new URL(localePath(l, path), base).href }));
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {alternates.map(({ l, href }) => <link rel="alternate" hreflang={l} href={href} />)}
+    <link rel="alternate" hreflang="x-default" href={alternates[0].href} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#f3ece0" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={d.meta.ogAlt} />
+    <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : 'en_GB'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@launchonnato" />
+
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <slot name="head" />
+  </head>
+  <body>
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-ink focus:px-4 focus:py-2 focus:text-cream">{d.nav.skip}</a>
+    <slot />
+    <script>
+      // Soft fade-in for blocks marked data-reveal. Content is fully visible without JS.
+      const els = document.querySelectorAll('[data-reveal]');
+      if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px' },
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+  </body>
+</html>

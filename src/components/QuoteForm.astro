@@ -1,0 +1,116 @@
+---
+import T from './T.astro';
+import Icon from './Icon.astro';
+import TapeDivider from './TapeDivider.astro';
+import { t, localePath, type Lang } from '../i18n';
+import { quoteForm } from '../config';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang).quote;
+const f = d.fields;
+const thanks = localePath(lang, 'thanks/');
+
+// Netlify Forms picks this form up at deploy time (data-netlify). For Formspree, set provider + endpoint in src/config.ts.
+const isNetlify = quoteForm.provider === 'netlify';
+const action = isNetlify ? thanks : quoteForm.formspreeEndpoint;
+const configured = isNetlify || Boolean(quoteForm.formspreeEndpoint);
+---
+<TapeDivider />
+<section id="quote" class="py-20 sm:py-28" aria-labelledby="quote-title">
+  <div class="wrap grid gap-12 lg:grid-cols-12">
+    <div class="lg:col-span-4" data-reveal>
+      <p class="eyebrow">{d.eyebrow}</p>
+      <h2 id="quote-title" class="mt-4 text-4xl sm:text-5xl">{d.title}</h2>
+      <p class="mt-6 text-lg text-ink-soft"><T v={d.lead} /></p>
+      {!configured && <p class="mt-6"><span class="todo">{d.notConfigured}</span></p>}
+    </div>
+
+    <form
+      name="quote"
+      method="POST"
+      action={action}
+      enctype="multipart/form-data"
+      data-netlify={isNetlify ? 'true' : undefined}
+      netlify-honeypot={isNetlify ? 'company-website' : undefined}
+      class="grid gap-5 rounded-xl border border-line bg-paper p-5 sm:grid-cols-2 sm:p-8 lg:col-span-8"
+      data-reveal
+    >
+      <input type="hidden" name="form-name" value="quote" />
+      <input type="hidden" name="language" value={lang} />
+      {!isNetlify && <input type="hidden" name="_next" value={thanks} />}
+      <p class="hidden" aria-hidden="true">
+        <label>Leave this empty: <input name="company-website" tabindex="-1" autocomplete="off" /></label>
+      </p>
+
+      <label class="block">
+        <span class="label">{f.brand} *</span>
+        <input class="field" type="text" name="brand" required autocomplete="organization" />
+      </label>
+      <label class="block">
+        <span class="label">{f.name} *</span>
+        <input class="field" type="text" name="name" required autocomplete="name" />
+      </label>
+      <label class="block">
+        <span class="label">{f.email} *</span>
+        <input class="field" type="email" name="email" required autocomplete="email" />
+      </label>
+      <label class="block">
+        <span class="label">{f.phone} <span class="font-normal text-ink-soft">({f.optional})</span></span>
+        <input class="field" type="tel" name="phone" autocomplete="tel" />
+      </label>
+
+      <label class="block">
+        <span class="label">{f.product} *</span>
+        <select class="field" name="product" required>
+          <option value="" disabled selected>{f.productPlaceholder}</option>
+          {f.products.map((p) => <option>{p}</option>)}
+        </select>
+      </label>
+      <label class="block">
+        <span class="label">{f.width}</span>
+        <select class="field" name="width">
+          <option value="" selected>{f.widthPlaceholder}</option>
+          {['18 mm', '20 mm', '22 mm', '24 mm'].map((w) => <option>{w}</option>)}
+          <option>{f.widthOther}</option>
+        </select>
+      </label>
+
+      <label class="block">
+        <span class="label">{f.quantity}</span>
+        <input class="field" type="number" name="quantity" min="1" step="1" inputmode="numeric" />
+        <span class="hint">{f.quantityHint}</span>
+      </label>
+      <label class="block">
+        <span class="label">{f.launch}</span>
+        <input class="field" type="date" name="launch_date" />
+        <span class="hint">{f.launchHint}</span>
+      </label>
+
+      <label class="block sm:col-span-2">
+        <span class="label">{f.logo}</span>
+        <span class="mt-1.5 flex items-center gap-3 rounded-md border border-dashed border-ink/30 bg-cream px-3.5 py-3 focus-within:border-terra">
+          <Icon name="upload" size={20} class="shrink-0 text-terra" />
+          <input
+            type="file"
+            name="logo"
+            accept=".svg,.ai,.pdf,.eps,.png,.jpg,.jpeg,image/svg+xml,application/pdf,application/postscript,image/png,image/jpeg"
+            class="w-full min-w-0 text-sm file:mr-3 file:rounded-full file:border-0 file:bg-ink file:px-4 file:py-1.5 file:text-sm file:text-cream hover:file:bg-terra"
+          />
+        </span>
+        <span class="hint">{f.logoHint}</span>
+      </label>
+
+      <label class="block sm:col-span-2">
+        <span class="label">{f.message}</span>
+        <textarea class="field min-h-32" name="message" rows="4" placeholder={f.messagePlaceholder}></textarea>
+      </label>
+
+      <div class="flex flex-col gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+        <p class="text-sm text-ink-soft">{f.privacy}</p>
+        <button type="submit" class="btn btn-primary shrink-0">
+          {f.submit}<Icon name="arrow-right" size={18} />
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

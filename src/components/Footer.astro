@@ -1,0 +1,72 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import SocialLinks from './SocialLinks.astro';
+import { t, localePath, type Lang } from '../i18n';
+import { contact, legal } from '../config';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const fd = d.footer;
+const home = localePath(lang);
+const year = new Date().getFullYear();
+---
+<footer class="bg-ink text-cream on-dark">
+  <div class="tape h-3" aria-hidden="true"></div>
+  <div class="wrap grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12">
+    <div class="lg:col-span-4">
+      <Logo dark />
+      <p class="mt-4 max-w-xs text-cream/75">{fd.tagline}</p>
+    </div>
+
+    <div class="lg:col-span-3">
+      <h2 class="font-mono text-xs uppercase tracking-[0.14em] text-mustard">{fd.contact}</h2>
+      <ul class="mt-4 space-y-3 text-cream/90">
+        <li class="flex items-start gap-3">
+          <Icon name="mail" size={18} class="mt-1 shrink-0 text-cream/60" />
+          <span class="sr-only">{fd.email}:</span>
+          {contact.email ? <a class="hover:text-mustard" href={`mailto:${contact.email}`}>{contact.email}</a> : <span class="todo">{fd.todoEmail}</span>}
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon name="phone" size={18} class="mt-1 shrink-0 text-cream/60" />
+          <span class="sr-only">{fd.phone}:</span>
+          {contact.phone ? <a class="hover:text-mustard" href={`tel:${contact.phone.replace(/\s+/g, '')}`}>{contact.phone}</a> : <span class="todo">{fd.todoPhone}</span>}
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon name="map-pin" size={18} class="mt-1 shrink-0 text-cream/60" />
+          <span class="sr-only">{fd.address}:</span>
+          {contact.address ? <address class="not-italic">{contact.address}</address> : <span class="todo">{fd.todoAddress}</span>}
+        </li>
+      </ul>
+    </div>
+
+    <div class="lg:col-span-3">
+      <h2 class="font-mono text-xs uppercase tracking-[0.14em] text-mustard">{fd.follow}</h2>
+      <SocialLinks class="mt-4 text-cream/90" showNames />
+    </div>
+
+    <nav class="lg:col-span-2" aria-label={fd.sections}>
+      <h2 class="font-mono text-xs uppercase tracking-[0.14em] text-mustard">{fd.sections}</h2>
+      <ul class="mt-4 space-y-2 text-cream/90">
+        <li><a class="hover:text-mustard" href={`${home}#process`}>{d.nav.process}</a></li>
+        <li><a class="hover:text-mustard" href={`${home}#straps`}>{d.nav.straps}</a></li>
+        <li><a class="hover:text-mustard" href={`${home}#beyond`}>{d.nav.beyond}</a></li>
+        <li><a class="hover:text-mustard" href={`${home}#faq`}>{d.nav.faq}</a></li>
+        <li><a class="hover:text-mustard" href={`${home}#quote`}>{d.nav.quote}</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="border-t border-cream/15">
+    <div class="wrap flex flex-col gap-3 py-6 text-sm text-cream/65 md:flex-row md:items-center md:justify-between">
+      <p>
+        © {year} {legal.companyName || 'LaunchOnNato'}. {fd.rights}
+        {!legal.companyName && <span class="todo ml-1">{fd.todoCompany}</span>}
+      </p>
+      <p class="flex flex-wrap items-center gap-x-4 gap-y-2">
+        {legal.taxId ? <span>{legal.taxId}</span> : <span class="todo">{fd.todoTax}</span>}
+        {legal.privacyUrl ? <a class="underline underline-offset-4 hover:text-mustard" href={legal.privacyUrl}>{fd.privacy}</a> : <span class="todo">TODO: {fd.privacy}</span>}
+      </p>
+    </div>
+  </div>
+</footer>

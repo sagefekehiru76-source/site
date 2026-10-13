@@ -1,0 +1,82 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import SocialLinks from './SocialLinks.astro';
+import { t, localePath, languages, type Lang } from '../i18n';
+
+interface Props { lang: Lang; path?: string }
+const { lang, path = '' } = Astro.props;
+const d = t(lang);
+const home = localePath(lang);
+const links = [
+  ['process', d.nav.process],
+  ['customization', d.nav.customization],
+  ['straps', d.nav.straps],
+  ['beyond', d.nav.beyond],
+  ['workshop', d.nav.workshop],
+  ['faq', d.nav.faq],
+] as const;
+---
+<header class="sticky top-0 z-40 border-b border-line/70 bg-cream/95 backdrop-blur-sm">
+  <div class="wrap flex h-16 items-center justify-between gap-4">
+    <a href={home} class="shrink-0" aria-label="LaunchOnNato — home"><Logo /></a>
+
+    <nav aria-label="Main" class="hidden xl:block">
+      <ul class="flex items-center gap-5 whitespace-nowrap text-[0.95rem]">
+        {links.map(([id, label]) => (
+          <li><a href={`${home}#${id}`} class="transition-colors hover:text-terra">{label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2 sm:gap-3">
+      <SocialLinks class="hidden lg:flex xl:hidden 2xl:flex" size={18} />
+      <div class="flex items-center font-mono text-xs" role="group" aria-label={d.nav.langLabel}>
+        {(Object.keys(languages) as Lang[]).map((l, i) => (
+          <>
+            {i > 0 && <span class="text-ink/30" aria-hidden="true">/</span>}
+            <a
+              href={localePath(l, path)}
+              hreflang={l}
+              lang={l}
+              aria-current={l === lang ? 'true' : undefined}
+              class:list={['px-1.5 py-2', l === lang ? 'font-medium text-ink underline decoration-terra decoration-2 underline-offset-4' : 'text-ink-soft hover:text-ink']}
+            >{languages[l]}</a>
+          </>
+        ))}
+      </div>
+      <a href={`${home}#quote`} class="btn btn-primary hidden whitespace-nowrap px-5 py-2 text-sm sm:inline-flex">{d.nav.quote}</a>
+
+      <details class="group relative xl:hidden">
+        <summary class="flex cursor-pointer items-center gap-1.5 rounded-full border border-ink/20 px-3 py-2 text-sm">
+          <Icon name="menu" size={18} />
+          <span>{d.nav.menu}</span>
+        </summary>
+        <div class="absolute right-0 top-full mt-2 w-[min(18rem,calc(100vw-2rem))] rounded-lg border border-line bg-paper p-5 shadow-[0_10px_30px_-12px_rgb(29_36_51/0.35)]">
+          <nav aria-label="Mobile">
+            <ul class="space-y-1">
+              {links.map(([id, label]) => (
+                <li><a href={`${home}#${id}`} class="block py-1.5 text-lg hover:text-terra">{label}</a></li>
+              ))}
+            </ul>
+          </nav>
+          <a href={`${home}#quote`} class="btn btn-primary mt-4 w-full">{d.nav.quote}</a>
+          <SocialLinks class="mt-4 -ml-2" />
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Close the mobile menu after picking a link or clicking outside.
+  const menu = document.querySelector<HTMLDetailsElement>('header details');
+  if (menu) {
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) menu.open = false;
+    });
+    document.addEventListener('click', (e) => {
+      if (menu.open && !menu.contains(e.target as Node)) menu.open = false;
+    });
+  }
+</script>

@@ -1,0 +1,44 @@
+---
+import Icon from './Icon.astro';
+import { t, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const d = t(Astro.props.lang).hero;
+---
+<section class="relative overflow-hidden" aria-labelledby="hero-title">
+  <div class="wrap grid items-center gap-10 pb-14 pt-8 sm:pt-12 lg:grid-cols-12 lg:gap-12 lg:pb-20 lg:pt-16">
+    <div class="lg:col-span-6">
+      <p class="eyebrow">{d.eyebrow}</p>
+      <h1 id="hero-title" class="mt-4 text-[2.6rem] sm:text-6xl lg:text-[4.1rem]">{d.title}</h1>
+      <p class="mt-6 max-w-xl text-lg text-ink-soft sm:text-xl">{d.lead}</p>
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a href="#quote" class="btn btn-primary text-base">
+          {d.cta}
+          <Icon name="arrow-right" size={18} />
+        </a>
+        <a href="#straps" class="btn btn-ghost text-base">{d.secondary}</a>
+      </div>
+      <p class="mt-8 flex items-center gap-3 text-sm text-ink-soft">
+        <span class="tape-thin inline-block h-1.5 w-10 shrink-0" aria-hidden="true"></span>
+        {d.note}
+      </p>
+    </div>
+
+    <figure class="relative lg:col-span-6">
+      <div class="relative mx-auto max-w-md overflow-hidden rounded-[1.25rem] bg-sand lg:max-w-none">
+        <img
+          src="/images/hero-watch-strap.jpg"
+          alt={d.imgAlt}
+          width="1200"
+          height="1500"
+          fetchpriority="high"
+          decoding="async"
+          class="aspect-[4/5] h-auto w-full object-cover"
+        />
+      </div>
+      <!-- TODO: keep this little tag in sync with what's in the hero photo -->
+      <figcaption class="absolute -bottom-4 left-4 rotate-[-2deg] rounded-sm border border-ink/15 bg-paper px-3 py-2 font-mono text-[0.7rem] uppercase tracking-wider text-ink shadow-sm sm:left-auto sm:right-6 lg:-left-6 lg:right-auto">
+        <span class="mr-2 inline-block h-2 w-2 rounded-full bg-terra align-middle" aria-hidden="true"></span>{d.tag}
+      </figcaption>
+    </figure>
+  </div>
+</section>

@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Hero from './Hero.astro';
+import TapeDivider from './TapeDivider.astro';
+import Process from './Process.astro';
+import Customization from './Customization.astro';
+import WatchStraps from './WatchStraps.astro';
+import BeyondWatches from './BeyondWatches.astro';
+import Workshop from './Workshop.astro';
+import Faq from './Faq.astro';
+import QuoteForm from './QuoteForm.astro';
+import Footer from './Footer.astro';
+import { site, socials } from '../config';
+import { t, type Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  url: site.url,
+  logo: new URL('/apple-touch-icon.png', site.url).href,
+  description: d.meta.description,
+  sameAs: socials.map((s) => s.href),
+};
+---
+<Base lang={lang}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Header lang={lang} />
+  <main id="main">
+    <Hero lang={lang} />
+    <TapeDivider />
+    <Process lang={lang} />
+    <Customization lang={lang} />
+    <WatchStraps lang={lang} />
+    <BeyondWatches lang={lang} />
+    <Workshop lang={lang} />
+    <Faq lang={lang} />
+    <QuoteForm lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Base>

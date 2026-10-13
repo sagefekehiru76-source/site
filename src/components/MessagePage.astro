@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import TapeDivider from './TapeDivider.astro';
+import { t, localePath, type Lang } from '../i18n';
+
+interface Props { lang: Lang; kind: 'thanks' | 'notFound'; path?: string }
+const { lang, kind, path = '' } = Astro.props;
+const d = t(lang)[kind];
+---
+<Base lang={lang} title={`${d.title} — LaunchOnNato`} path={path} noindex>
+  <Header lang={lang} path={path} />
+  <main id="main" class="wrap flex min-h-[60vh] flex-col justify-center py-24">
+    <TapeDivider thin class="w-24" />
+    <h1 class="mt-8 max-w-2xl text-4xl sm:text-6xl">{d.title}</h1>
+    <p class="mt-6 max-w-xl text-lg text-ink-soft">{d.text}</p>
+    <p class="mt-10"><a href={localePath(lang)} class="btn btn-ghost">{d.back}</a></p>
+  </main>
+  <Footer lang={lang} />
+</Base>
