@@ -17,6 +17,16 @@ Node 20+ (22 recommended).
 
 ## Deploy
 
+**Current setup — automatic:** every push to `main` or `claude/launchonnato-brand-site-i8kbw2` runs
+`.github/workflows/deploy.yml`, which builds the site and uploads `dist/` over SSH to
+`domains/natolaunch.ceo/public_html` → https://natolaunch.ceo. Access comes from the repository secrets
+`SSH_HOST`, `SSH_PORT`, `SSH_USER`, `SSH_PASSWORD` (Settings → Secrets and variables → Actions).
+It can also be started by hand: Actions → Deploy to hosting → Run workflow.
+
+Note: Netlify Forms only work on Netlify. On this hosting the quote form needs another backend (TODO).
+
+### Other options
+
 **Netlify (recommended, because the quote form works out of the box):** connect the repo. `netlify.toml` already sets
 `npm run build` → `dist`. After the first deploy, open *Forms* in the Netlify dashboard: a form named `quote` should show up.
 Then set up email notifications under *Forms → Form notifications*. Uploaded logo files are stored by Netlify (up to 8 MB per request).
@@ -84,7 +94,7 @@ It crops/resizes anything too large to the size below and re-compresses it, so L
 - [ ] `legal.privacyUrl` — privacy policy / KVKK + GDPR notice (the form collects personal data and files)
 
 ### Domain
-- [ ] Real domain in `astro.config.mjs` (`site`), `src/config.ts` (`site.url`) and `public/robots.txt`
+- [x] Domain: https://natolaunch.ceo (`astro.config.mjs`, `src/config.ts`, `public/robots.txt`)
 
 ### Quote form
 - [ ] Netlify: enable form email notifications after the first deploy, **or**

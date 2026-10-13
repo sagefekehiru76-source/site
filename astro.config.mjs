@@ -4,8 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  // TODO: replace with the real production domain before launch (used for sitemap, canonical and OG URLs).
-  site: 'https://launchonnato.com',
+  site: 'https://natolaunch.ceo',
   trailingSlash: 'always',
   // One small stylesheet — inline it so there's no render-blocking CSS request.
   build: { inlineStylesheets: 'always' },

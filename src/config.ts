@@ -2,8 +2,7 @@
 
 export const site = {
   name: 'LaunchOnNato',
-  // TODO: real production URL (also update astro.config.mjs and public/robots.txt)
-  url: 'https://launchonnato.com',
+  url: 'https://natolaunch.ceo',
 };
 
 export const contact = {
