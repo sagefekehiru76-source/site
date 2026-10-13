@@ -11,7 +11,7 @@ import Workshop from './Workshop.astro';
 import Faq from './Faq.astro';
 import QuoteForm from './QuoteForm.astro';
 import Footer from './Footer.astro';
-import { site, socials } from '../config';
+import { site, socials, contact, owners } from '../config';
 import { t, type Lang } from '../i18n';
 
 interface Props { lang: Lang }
@@ -26,6 +26,17 @@ const jsonLd = {
   logo: new URL('/apple-touch-icon.png', site.url).href,
   description: d.meta.description,
   sameAs: socials.map((s) => s.href),
+  email: contact.email,
+  founder: owners.map((o) => ({ '@type': 'Person', name: o.name })),
+  contactPoint: owners.map((o) => ({ '@type': 'ContactPoint', telephone: o.phone.tel, email: contact.email, contactType: 'sales', availableLanguage: ['en', 'tr'] })),
+  address: owners.map((o) => ({
+    '@type': 'PostalAddress',
+    streetAddress: o.address.street,
+    postalCode: o.address.postalCode,
+    addressLocality: o.address.district,
+    addressRegion: o.address.province,
+    addressCountry: 'TR',
+  })),
 };
 ---
 <Base lang={lang}>

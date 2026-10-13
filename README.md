@@ -30,7 +30,7 @@ to Formspree in `src/config.ts` (`provider: 'formspree'` + your endpoint). Note:
 | --- | --- |
 | English copy | `src/i18n/en.ts` |
 | Turkish copy | `src/i18n/tr.ts` |
-| Email, phone, address, legal details, social links, form backend | `src/config.ts` |
+| Email, owners (phones, addresses), legal details, social links, form backend | `src/config.ts` |
 | Domain (sitemap, canonical, Open Graph) | `astro.config.mjs`, `src/config.ts`, `public/robots.txt` |
 | Colours & fonts | `src/styles/global.css` (`@theme` block) |
 | Page sections | `src/components/*.astro` |
@@ -78,8 +78,7 @@ It crops/resizes anything too large to the size below and re-compresses it, so L
 
 ### Contacts & legal — `src/config.ts`
 - [x] `contact.email` — info@natolaunch.ceo
-- [ ] `contact.phone` (phone / WhatsApp)
-- [ ] `contact.address` (workshop address)
+- [x] Owners, phones, addresses — `owners` in `src/config.ts`
 - [ ] `legal.companyName` (registered company name)
 - [ ] `legal.taxId` (tax office + number / VAT ID)
 - [ ] `legal.privacyUrl` — privacy policy / KVKK + GDPR notice (the form collects personal data and files)

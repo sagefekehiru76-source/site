@@ -8,11 +8,22 @@ export const site = {
 
 export const contact = {
   email: 'info@natolaunch.ceo',
-  // TODO: real phone / WhatsApp in international format, e.g. +90 5xx xxx xx xx
-  phone: '',
-  // TODO: workshop address (street, district, city, postcode, country)
-  address: '',
 };
+
+/** Owners — shown in the footer contacts and in the structured data (JSON-LD). */
+export const owners = [
+  {
+    name: 'Ünzile Atasoy',
+    // tel: international format for the link, display: how it's printed
+    phone: { tel: '+902642731687', display: '+90 264 273 16 87' },
+    address: { street: 'Dereboyu Sokak 12', postalCode: '54100', district: 'Adapazarı', province: 'Sakarya', country: 'Türkiye' },
+  },
+  {
+    name: 'Füsun Başkaya',
+    phone: { tel: '+902485213356', display: '+90 248 521 33 56' },
+    address: { street: 'Saadettin Yücel Caddesi 88', postalCode: '15420', district: 'Altınyayla', province: 'Burdur', country: 'Türkiye' },
+  },
+];
 
 export const legal = {
   // TODO: registered company name (e.g. "… Tekstil Ltd. Şti.")
