@@ -1,4 +1,5 @@
 ---
+import { asset } from '../lib/asset';
 import '@fontsource/young-serif/400.css';
 import '@fontsource-variable/instrument-sans/wght.css';
 import '@fontsource/ibm-plex-mono/500.css';
@@ -21,7 +22,7 @@ const title = Astro.props.title ?? d.meta.title;
 const description = Astro.props.description ?? d.meta.description;
 const base = Astro.site ?? new URL(site.url);
 const canonical = new URL(localePath(lang, path), base).href;
-const ogImage = new URL('/images/og-image.jpg', base).href;
+const ogImage = new URL(asset('images/og-image.jpg'), base).href;
 const alternates = (['en', 'tr'] as const).map((l) => ({ l, href: new URL(localePath(l, path), base).href }));
 ---
 <!doctype html>
@@ -36,9 +37,9 @@ const alternates = (['en', 'tr'] as const).map((l) => ({ l, href: new URL(locale
     {alternates.map(({ l, href }) => <link rel="alternate" hreflang={l} href={href} />)}
     <link rel="alternate" hreflang="x-default" href={alternates[0].href} />
 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" href={asset("favicon.svg")} type="image/svg+xml" />
+    <link rel="icon" href={asset("favicon.ico")} sizes="32x32" />
+    <link rel="apple-touch-icon" href={asset("apple-touch-icon.png")} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#f3ece0" />
 

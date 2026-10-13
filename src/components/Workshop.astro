@@ -1,4 +1,5 @@
 ---
+import { img } from '../lib/asset';
 import T from './T.astro';
 import { t, type Lang } from '../i18n';
 interface Props { lang: Lang }
@@ -8,7 +9,7 @@ const d = t(Astro.props.lang).workshop;
   <div class="wrap">
     <div class="relative" data-reveal>
       <img
-        src="/images/workshop-sewing.jpg"
+        src={img("workshop-sewing.jpg")}
         alt={d.imgMain}
         width="1920"
         height="1080"
@@ -38,8 +39,8 @@ const d = t(Astro.props.lang).workshop;
           ))}
         </dl>
         <div class="mt-8 grid grid-cols-2 gap-4">
-          <img src="/images/tape-rolls.jpg" alt={d.imgRolls} width="900" height="900" loading="lazy" decoding="async" class="aspect-square h-auto w-full rounded-lg object-cover" />
-          <img src="/images/thread-spools.jpg" alt={d.imgThread} width="900" height="900" loading="lazy" decoding="async" class="aspect-square h-auto w-full translate-y-6 rounded-lg object-cover" />
+          <img src={img("tape-rolls.jpg")} alt={d.imgRolls} width="900" height="900" loading="lazy" decoding="async" class="aspect-square h-auto w-full rounded-lg object-cover" />
+          <img src={img("thread-spools.jpg")} alt={d.imgThread} width="900" height="900" loading="lazy" decoding="async" class="aspect-square h-auto w-full translate-y-6 rounded-lg object-cover" />
         </div>
       </div>
     </div>

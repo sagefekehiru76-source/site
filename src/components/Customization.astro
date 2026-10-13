@@ -1,4 +1,5 @@
 ---
+import { img } from '../lib/asset';
 import T from './T.astro';
 import { t, type Lang } from '../i18n';
 interface Props { lang: Lang }
@@ -22,7 +23,7 @@ const finishes: Record<string, string> = {
       <div class="lg:col-span-5">
         <div class="lg:sticky lg:top-24" data-reveal>
           <img
-            src="/images/macro-logo-stitch.jpg"
+            src={img("macro-logo-stitch.jpg")}
             alt={d.macroAlt}
             width="1500"
             height="1000"
@@ -37,7 +38,7 @@ const finishes: Record<string, string> = {
         {d.methods.map((m, i) => (
           <li class="grid grid-cols-[5.5rem_1fr] gap-5 py-7 sm:grid-cols-[8rem_1fr] sm:gap-7" data-reveal>
             <img
-              src={`/images/${m.img}`}
+              src={img(m.img)}
               alt=""
               width="800"
               height="800"

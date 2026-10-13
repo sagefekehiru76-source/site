@@ -1,4 +1,5 @@
 ---
+import { img } from '../lib/asset';
 import T from './T.astro';
 import { t, type Lang } from '../i18n';
 interface Props { lang: Lang }
@@ -14,7 +15,7 @@ const d = t(Astro.props.lang).process;
       </div>
       <div class="lg:col-span-5" data-reveal>
         <img
-          src="/images/process-samples.jpg"
+          src={img("process-samples.jpg")}
           alt={d.imgAlt}
           width="1500"
           height="1000"
