@@ -29,7 +29,7 @@ const en = {
     secondary: 'See the straps',
     note: 'Also camera, bag and guitar straps. Same tape, same care.',
     imgAlt: 'Watch on a woven strap with a stitched logo near the buckle',
-    tag: 'Pass-through · 20 mm · jacquard logo',
+    tag: 'Pass-through · 20 mm · polished steel',
   },
   process: {
     eyebrow: 'For watch brands',

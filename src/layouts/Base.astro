@@ -22,8 +22,8 @@ const title = Astro.props.title ?? d.meta.title;
 const description = Astro.props.description ?? d.meta.description;
 const base = Astro.site ?? new URL(site.url);
 const canonical = new URL(localePath(lang, path), base).href;
-const ogImage = new URL(asset('images/og-image.jpg'), base).href;
-const alternates = (['en', 'tr'] as const).map((l) => ({ l, href: new URL(localePath(l, path), base).href }));
+const ogImage = new URL(asset(lang === 'en' ? 'images/og-image-en.jpg' : 'images/og-image.jpg'), base).href;
+const alternates = (['tr', 'en'] as const).map((l) => ({ l, href: new URL(localePath(l, path), base).href }));
 ---
 <!doctype html>
 <html lang={lang}>
@@ -63,9 +63,9 @@ const alternates = (['en', 'tr'] as const).map((l) => ({ l, href: new URL(locale
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-ink focus:px-4 focus:py-2 focus:text-cream">{d.nav.skip}</a>
     <slot />
     <script>
-      // Soft fade-in for blocks marked data-reveal. Content is fully visible without JS.
+      // Fade/slide-in for blocks marked data-reveal. Content is fully visible without JS.
       const els = document.querySelectorAll('[data-reveal]');
-      if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if ('IntersectionObserver' in window) {
         const io = new IntersectionObserver(
           (entries) => {
             for (const e of entries) {

@@ -3,6 +3,9 @@ ErrorDocument 404 /404.html
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # Turkish moved from /tr/ to the site root
+  RewriteRule ^tr(?:/(.*))?$ /$1 [R=301,L]
+
   # Force HTTPS
   RewriteCond %{HTTPS} !=on
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

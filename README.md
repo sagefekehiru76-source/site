@@ -1,7 +1,7 @@
 # LaunchOnNato — site
 
 Business-card site for LaunchOnNato: custom straps with the client's logo (watch straps first; camera, bag and guitar straps too).
-Astro + Tailwind CSS, fully static. English at `/`, Turkish at `/tr/`.
+Astro + Tailwind CSS, fully static. Turkish (main) at `/`, English at `/en/` (old `/tr/` links redirect to `/`).
 
 ## Run locally
 

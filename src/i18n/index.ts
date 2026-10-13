@@ -1,7 +1,9 @@
 import en from './en';
 import tr from './tr';
 
-export const languages = { en: 'EN', tr: 'TR' } as const;
+// Turkish is the main language (served at /), English lives under /en/
+export const languages = { tr: 'TR', en: 'EN' } as const;
+export const defaultLang = 'tr';
 export type Lang = keyof typeof languages;
 
 export const dicts = { en, tr };
@@ -13,7 +15,7 @@ export function t(lang: Lang) {
 /** Root-relative URL for a page in the given language ("" = home). */
 export function localePath(lang: Lang, path = '') {
   const clean = path.replace(/^\/+/, '');
-  return lang === 'en' ? `/${clean}` : `/${lang}/${clean}`;
+  return lang === defaultLang ? `/${clean}` : `/${lang}/${clean}`;
 }
 
 export const isTodo = (s: string) => s.trim().startsWith('TODO');

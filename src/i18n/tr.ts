@@ -30,7 +30,7 @@ const tr: Dict = {
     secondary: 'Kayışları gör',
     note: 'Fotoğraf makinesi, çanta ve gitar askıları da yapıyoruz. Aynı bant, aynı özen.',
     imgAlt: 'Tokasının yanında nakış logolu dokuma kayışlı bir saat',
-    tag: 'Pass-through · 20 mm · jakarlı logo',
+    tag: 'Pass-through · 20 mm · parlak çelik',
   },
   process: {
     eyebrow: 'Saat markaları için',

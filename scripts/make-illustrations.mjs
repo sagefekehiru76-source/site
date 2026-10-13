@@ -29,12 +29,18 @@ const F = {
   serif: font('@fontsource/young-serif/files/young-serif-latin-400-normal.woff'),
   mono: font('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff'),
 };
+// Turkish letters (ş ğ ı İ …) live in the latin-ext subsets
+const FX = {
+  serif: font('@fontsource/young-serif/files/young-serif-latin-ext-400-normal.woff'),
+  mono: font('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-ext-500-normal.woff'),
+};
+const pick = (f, ch) => (F[f].charToGlyph(ch).index > 0 ? F[f] : FX[f]);
 function text(str, x, y, size, { f = 'serif', anchor = 'start', fill = C.ink, spacing = 0, attrs = '' } = {}) {
-  const fo = F[f];
   const w = width(str, size, f, spacing);
   let cx = anchor === 'middle' ? x - w / 2 : anchor === 'end' ? x - w : x;
   let d = '';
   for (const ch of str) {
+    const fo = pick(f, ch);
     const g = fo.charToGlyph(ch);
     d += pathData(g.getPath(cx, y, size));
     cx += adv(fo, ch, size) + spacing;
@@ -54,9 +60,8 @@ function pathData(p) {
 // glyph metrics load lazily in opentype.js — read them via the font API
 const adv = (fo, ch, size) => fo.getAdvanceWidth(ch, size, { kerning: false });
 function width(str, size, f = 'serif', spacing = 0) {
-  const fo = F[f];
   let w = 0;
-  for (const ch of str) w += adv(fo, ch, size) + spacing;
+  for (const ch of str) w += adv(pick(f, ch), ch, size) + spacing;
   return w - spacing;
 }
 
@@ -206,9 +211,6 @@ scenes['hero-watch-strap.jpg'] = [1200, 1500, () => {
   const W = 230, x = 600;
   let s = `<circle cx="1020" cy="260" r="260" fill="${C.sand}"/><circle cx="130" cy="1330" r="200" fill="${C.sand}"/>`;
   s += strap(`M${x} -40 V1540`, W, PAL.navyTerra);
-  // woven wordmark along the upper strap
-  s += `<g transform="translate(${x} 220) rotate(-90)">${text('LAUNCHONNATO', 0, 13, 40, { f: 'mono', anchor: 'middle', fill: C.cream, spacing: 6 })}</g>`;
-  s += `<path d="M${x} 20 V420" stroke="url(#weave)" stroke-width="${W}"/>`;
   s += watch(x, 700, 300, { dial: C.paper });
   s += keeper(x, 1130, W, 90) + keeper(x, 1205, W, 90) + buckle(x, 1330, W, 90);
   return s;
@@ -315,7 +317,6 @@ scenes['camera-strap.jpg'] = [1200, 1500, () => {
     <circle cx="600" cy="1220" r="96" fill="#2B3A55"/><circle cx="565" cy="1185" r="30" fill="#fff" fill-opacity=".18"/>
   </g>`;
   s += `<rect x="235" y="985" width="44" height="70" rx="12" fill="url(#steel)"/><rect x="921" y="985" width="44" height="70" rx="12" fill="url(#steel)"/>`;
-  s += `<g transform="translate(330 560) rotate(-62)">${text('LAUNCHONNATO', 0, 12, 34, { f: 'mono', anchor: 'middle', fill: C.cream, spacing: 5 })}</g>`;
   return s;
 }];
 
@@ -342,7 +343,6 @@ scenes['guitar-strap.jpg'] = [1500, 1000, () => {
   for (let i = 0; i < 6; i++) s += `<line x1="300" y1="${532 + i * 12}" x2="1660" y2="${532 + i * 12}" stroke="${C.steel1}" stroke-width="2"/>`;
   s += `</g>`;
   s += strap(`M235 760 C300 180 900 60 1020 330`, 110, PAL.ecru, { cap: 'butt' });
-  s += `<g transform="translate(560 235) rotate(-28)">${text('LAUNCHONNATO', 0, 12, 34, { f: 'mono', anchor: 'middle', fill: C.navy, spacing: 6 })}</g>`;
   return s;
 }];
 
@@ -400,14 +400,16 @@ scenes['thread-spools.jpg'] = [900, 900, () => {
   return s;
 }];
 
-scenes['og-image.jpg'] = [1200, 630, () => {
+const og = (headline, sub) => () => {
   let s = strap(`M-40 520 H1240`, 110, PAL.navyTerra);
   s += buckle(980, 520, 110) + keeper(1060, 520, 110);
   s += `<g transform="translate(90 120) scale(0.95)">${lockup().replace(/^<svg[^>]*>|<\/svg>$/g, '')}</g>`;
-  s += text('Custom straps with your logo — ready for your launch.', 92, 300, 34, { fill: C.ink });
-  s += text('WATCH · CAMERA · BAG · GUITAR STRAPS', 92, 360, 22, { f: 'mono', fill: C.terra, spacing: 4 });
+  s += text(headline, 92, 300, 34, { fill: C.ink });
+  s += text(sub, 92, 360, 22, { f: 'mono', fill: C.terra, spacing: 4 });
   return s;
-}];
+};
+scenes['og-image.jpg'] = [1200, 630, og('Logonuzla özel kayışlar — lansmanınıza hazır.', 'SAAT · FOTOĞRAF MAKİNESİ · ÇANTA · GİTAR')];
+scenes['og-image-en.jpg'] = [1200, 630, og('Custom straps with your logo — ready for your launch.', 'WATCH · CAMERA · BAG · GUITAR STRAPS')];
 
 // ---------- write ----------
 mkdirSync(IMG, { recursive: true });
