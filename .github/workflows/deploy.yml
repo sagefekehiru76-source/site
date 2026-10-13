@@ -1,0 +1,77 @@
+# Builds the site and uploads it to the hosting over SSH on every push.
+# One-time setup in GitHub: Settings → Secrets and variables → Actions → Secrets
+#   - SSH_HOST, SSH_PORT, SSH_USER, SSH_PASSWORD — hosting SSH access (required)
+#   - Variable DEPLOY_PATH  — optional, e.g. domains/launchonnato.com/public_html
+#     (if empty, the job uses the only domains/*/public_html on the server, or ~/public_html)
+name: Deploy to hosting
+
+on:
+  push:
+    branches: [main, claude/launchonnato-brand-site-i8kbw2]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSHPASS: ${{ secrets.SSH_PASSWORD }}
+      DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+    steps:
+      - name: Check secret
+        run: |
+          for v in SSH_HOST SSH_PORT SSH_USER SSHPASS; do
+            if [ -z "${!v}" ]; then
+              echo "::error::Missing secret for $v — add SSH_HOST, SSH_PORT, SSH_USER, SSH_PASSWORD in Settings → Secrets and variables → Actions"
+              exit 1
+            fi
+          done
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Prepare SSH
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq sshpass rsync
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "$SSH_PORT" "$SSH_HOST" >> ~/.ssh/known_hosts
+
+      - name: Find web root
+        run: |
+          ssh_run() { sshpass -e ssh -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "$@"; }
+          echo "Sites on the server:"
+          ssh_run 'ls -d domains/*/public_html 2>/dev/null; ls -ld public_html 2>/dev/null' || true
+          if [ -z "$DEPLOY_PATH" ]; then
+            roots=$(ssh_run 'ls -d domains/*/public_html 2>/dev/null' || true)
+            count=$(printf '%s\n' "$roots" | grep -c . || true)
+            if [ "$count" = "1" ]; then
+              DEPLOY_PATH="$roots"
+            elif [ "$count" = "0" ] && ssh_run 'test -d public_html'; then
+              DEPLOY_PATH=public_html
+            else
+              echo "::error::Several sites found — set the DEPLOY_PATH variable to one of them (see list above)"
+              exit 1
+            fi
+          fi
+          echo "Deploying to: $DEPLOY_PATH"
+          echo "DEPLOY_PATH=$DEPLOY_PATH" >> "$GITHUB_ENV"
+
+      - name: Upload
+        run: |
+          # --delete only affects files inside DEPLOY_PATH; .well-known (SSL checks) is kept
+          sshpass -e rsync -rlz --delete --exclude '.well-known' \
+            -e "ssh -p $SSH_PORT" dist/ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/"
+          echo "Done: uploaded to $DEPLOY_PATH"
