@@ -1,15 +1,18 @@
 ---
-// Wordmark placeholder. TODO: swap for the real logo (SVG) when it's ready.
+// Brand logo: strap-and-buckle mark + wordmark. Standalone files live in public/brand/.
 interface Props { class?: string; dark?: boolean }
 const { class: cls = '', dark = false } = Astro.props;
 ---
 <span class:list={['inline-flex items-center gap-2.5', cls]}>
-  <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
-    <rect width="64" height="64" rx="14" fill={dark ? '#2C3650' : '#1D2433'} />
-    <rect y="22" width="64" height="7" fill="#A9472A" />
-    <rect y="29" width="64" height="6" fill="#D6A137" />
-    <rect y="35" width="64" height="7" fill="#A9472A" />
-    <rect x="22" y="14" width="20" height="36" rx="3" fill="none" stroke="#F3ECE0" stroke-width="4" />
+  <svg width="28" height="28" viewBox="0 0 64 64" aria-hidden="true">
+    <rect width="64" height="64" rx="14" fill={dark ? '#2C3A5C' : '#1F2A44'} />
+    <rect x="22" width="20" height="64" fill="#A9472A" />
+    <rect x="25" width="1.6" height="64" fill="#F3ECE0" opacity=".85" />
+    <rect x="37.4" width="1.6" height="64" fill="#F3ECE0" opacity=".85" />
+    <rect x="30" width="4" height="64" fill="#D6A137" />
+    <rect x="14" y="18" width="36" height="17" rx="5" fill="none" stroke="#F3ECE0" stroke-width="4" />
+    <rect x="30.5" y="26.5" width="3" height="15" rx="1.5" fill="#F3ECE0" />
+    <rect x="19" y="44" width="26" height="5" rx="2" fill="#F3ECE0" />
   </svg>
   <span class="font-display text-xl leading-none tracking-tight">LaunchOn<span class={dark ? 'text-mustard' : 'text-terra'}>Nato</span></span>
 </span>

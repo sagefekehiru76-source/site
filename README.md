@@ -44,7 +44,8 @@ to Formspree in `src/config.ts` (`provider: 'formspree'` + your endpoint). Note:
 | Domain (sitemap, canonical, Open Graph) | `astro.config.mjs`, `src/config.ts`, `public/robots.txt` |
 | Colours & fonts | `src/styles/global.css` (`@theme` block) |
 | Page sections | `src/components/*.astro` |
-| Photos | `public/images/` |
+| Photos / illustrations | `public/images/` |
+| Logo files | `public/brand/` |
 
 Any text in the copy files that starts with `TODO` shows on the page as a dashed placeholder chip, so nothing unfinished goes live
 unnoticed. When a value is filled in, the chip disappears.
@@ -54,15 +55,15 @@ Fonts (self-hosted from Google Fonts via Fontsource, no external requests): **Yo
 
 ## Photos
 
-Placeholders in `public/images/` already have the right proportions. Replace each with your photo **under the same name**,
-then run:
+`public/images/` currently holds brand illustrations (drawn by `npm run illustrations`, see `scripts/make-illustrations.mjs`).
+Real photos sell better — when you have them, replace each file **under the same name**, then run:
 
 ```bash
 npm run images:fit
 ```
 
 It crops/resizes anything too large to the size below and re-compresses it, so Lighthouse stays at 90+.
-(To bring the placeholders back: `npm run placeholders -- --force`.)
+(To redraw the illustrations: `npm run illustrations -- --force` — this overwrites everything in `public/images/`.)
 
 | File | Size / ratio | What to shoot |
 | --- | --- | --- |
@@ -123,9 +124,9 @@ It crops/resizes anything too large to the size below and re-compresses it, so L
 - [ ] Tape / thread / hardware details — `workshop.materials`
 
 ### Visuals
-- [ ] All 17 photos in `public/images/` (see table above), then `npm run images:fit`
+- [ ] Optional: replace illustrations with real photos (see table above), then `npm run images:fit`
 - [ ] Hero caption chip ("Pass-through · 20 mm · jacquard logo") matches the hero photo — `hero.tag`
-- [ ] Real logo: replace the wordmark in `src/components/Logo.astro`, and `public/favicon.svg`, `favicon.ico`, `apple-touch-icon.png`
+- [x] Logo: strap-and-buckle mark + wordmark — files in `public/brand/` (SVG, PNG, on-dark version), favicons updated
 
 ### Language
 - [ ] Native-speaker proofread of the Turkish copy (`src/i18n/tr.ts`)
