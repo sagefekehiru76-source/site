@@ -11,7 +11,7 @@ import Workshop from './Workshop.astro';
 import Faq from './Faq.astro';
 import QuoteForm from './QuoteForm.astro';
 import Footer from './Footer.astro';
-import { site, socials, contact, owners } from '../config';
+import { site, socials, contact, owners, legal } from '../config';
 import { t, type Lang } from '../i18n';
 
 interface Props { lang: Lang }
@@ -22,6 +22,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: site.name,
+  legalName: legal.companyName || undefined,
   url: site.url,
   logo: new URL('/apple-touch-icon.png', site.url).href,
   description: d.meta.description,

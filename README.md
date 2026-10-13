@@ -79,7 +79,7 @@ It crops/resizes anything too large to the size below and re-compresses it, so L
 ### Contacts & legal — `src/config.ts`
 - [x] `contact.email` — info@natolaunch.ceo
 - [x] Owners, phones, addresses — `owners` in `src/config.ts`
-- [ ] `legal.companyName` (registered company name)
+- [x] `legal.companyName` — LAUNCHONNATO SAAT KAYIŞI VE AKSESUAR İMALAT SANAYİ VE TİCARET A.Ş.
 - [ ] `legal.taxId` (tax office + number / VAT ID)
 - [ ] `legal.privacyUrl` — privacy policy / KVKK + GDPR notice (the form collects personal data and files)
 

@@ -26,8 +26,7 @@ export const owners = [
 ];
 
 export const legal = {
-  // TODO: registered company name (e.g. "… Tekstil Ltd. Şti.")
-  companyName: '',
+  companyName: 'LAUNCHONNATO SAAT KAYIŞI VE AKSESUAR İMALAT SANAYİ VE TİCARET A.Ş.',
   // TODO: tax office + tax number (Vergi Dairesi / Vergi No) or VAT ID
   taxId: '',
   // TODO: link to privacy policy / KVKK + GDPR notice (page or PDF). Leave empty to hide the link.

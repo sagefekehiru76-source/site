@@ -10,6 +10,7 @@ const d = t(lang);
 const fd = d.footer;
 const home = localePath(lang);
 const year = new Date().getFullYear();
+const owner = legal.companyName || 'LaunchOnNato';
 ---
 <footer class="bg-ink text-cream on-dark">
   <div class="tape h-3" aria-hidden="true"></div>
@@ -69,7 +70,7 @@ const year = new Date().getFullYear();
   <div class="border-t border-cream/15">
     <div class="wrap flex flex-col gap-3 py-6 text-sm text-cream/65 md:flex-row md:items-center md:justify-between">
       <p>
-        © {year} {legal.companyName || 'LaunchOnNato'}. {fd.rights}
+        © {year} {owner}{owner.endsWith('.') ? '' : '.'} {fd.rights}
         {!legal.companyName && <span class="todo ml-1">{fd.todoCompany}</span>}
       </p>
       <p class="flex flex-wrap items-center gap-x-4 gap-y-2">
