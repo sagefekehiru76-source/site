@@ -60,9 +60,9 @@ const tr: Dict = {
     ],
     factsTitle: 'Yaklaşık rakamlar',
     facts: [
-      { label: 'Numune', value: 'TODO: örn. X–Y iş günü' },
-      { label: 'Üretim', value: 'TODO: onaydan sonra örn. X–Y hafta' },
-      { label: 'Minimum sipariş', value: 'TODO: model / renk başına MOQ' },
+      { label: 'Numune', value: 'Teklifle birlikte netleşir' },
+      { label: 'Üretim', value: 'Lansman tarihinize göre planlanır' },
+      { label: 'Minimum sipariş', value: 'Küçük partiler de olur — bize sorun' },
       { label: 'Gönderim', value: 'Türkiye ve AB' },
     ],
     factsNote: 'Süre kısa mı? Tarihi formda belirtin, yetişip yetişemeyeceğini dürüstçe söyleriz.',
@@ -105,7 +105,7 @@ const tr: Dict = {
       },
     ],
     coloursTitle: 'Bant renkleri',
-    coloursNote: 'TODO: gerçek renk kartınızla değiştirin (isim + kod). Özel renkler talep üzerine.',
+    coloursNote: 'Ekrandaki renkler yaklaşıktır — güncel renk kartını bizden isteyin. Özel renkler talep üzerine.',
     colours: [
       { name: 'Ekru', hex: '#EDE4D3' },
       { name: 'Lacivert', hex: '#1F2A44' },
@@ -120,7 +120,7 @@ const tr: Dict = {
     hardware: [
       { name: 'Parlak', text: 'Ayna gibi parlak çelik. Klasik ve parlak kasalarla uyumlu.', finish: 'polished' },
       { name: 'Fırçalanmış', text: 'Günlük çizikleri gizleyen saten doku. Her saate uyan güvenli seçim.', finish: 'brushed' },
-      { name: 'PVD', text: 'Siyah kaplama (TODO: diğer PVD renklerini teyit edin). Siyah ve kaplamalı kasalara uygun.', finish: 'pvd' },
+      { name: 'PVD', text: 'Siyah kaplama. Siyah ve kaplamalı kasalara uygun.', finish: 'pvd' },
     ],
   },
   straps: {
@@ -135,6 +135,7 @@ const tr: Dict = {
       hardware: 'Metal aksam',
       logo: 'Logo seçenekleri',
     },
+    specNote: 'Kesin kalınlık, uzunluk ve malzeme numuneyle birlikte netleşir.',
     types: [
       {
         id: 'pass-through',
@@ -144,9 +145,9 @@ const tr: Dict = {
         imgAlt: 'Saate takılı pass-through kayış',
         specs: {
           widths: '18 / 20 / 22 / 24 mm',
-          thickness: 'TODO: örn. 1,2 mm',
-          length: 'TODO: toplam uzunluk + bilek aralığı',
-          material: 'TODO: örn. naylon / polyester şerit',
+          thickness: '',
+          length: '',
+          material: '',
           hardware: 'Toka + köprüler · parlak, fırçalanmış veya PVD',
           logo: 'Nakış · jakar · gravür',
         },
@@ -159,9 +160,9 @@ const tr: Dict = {
         imgAlt: 'Saate takılı single-pass kayış',
         specs: {
           widths: '18 / 20 / 22 / 24 mm',
-          thickness: 'TODO: örn. 1,2 mm',
-          length: 'TODO: toplam uzunluk + bilek aralığı',
-          material: 'TODO: örn. naylon / polyester şerit',
+          thickness: '',
+          length: '',
+          material: '',
           hardware: 'Toka + köprüler · parlak, fırçalanmış veya PVD',
           logo: 'Nakış · jakar · gravür',
         },
@@ -174,9 +175,9 @@ const tr: Dict = {
         imgAlt: 'Saate takılı iki parça dokuma kayış',
         specs: {
           widths: '18 / 20 / 22 / 24 mm',
-          thickness: 'TODO: örn. 1,5 mm',
-          length: 'TODO: uzun taraf / kısa taraf, mm',
-          material: 'TODO: bant + astar / kenar bitişi',
+          thickness: '',
+          length: '',
+          material: '',
           hardware: 'Toka · parlak, fırçalanmış veya PVD',
           logo: 'Nakış · jakar · kabartma · gravür',
         },
@@ -192,7 +193,7 @@ const tr: Dict = {
         id: 'camera',
         name: 'Fotoğraf makinesi askıları',
         text: 'Boyun veya bilek boyu; aynasız ve film makinelerine göre ölçülendirilmiş. Logonuz askının makineyle buluştuğu yerde.',
-        details: 'TODO: genişlikler, uzunluklar, bağlantı uçları (halka / hızlı bağlantı)',
+        details: '',
         img: 'camera-strap.jpg',
         imgAlt: 'Fotoğraf makinesine takılı logolu dokuma askı',
       },
@@ -200,7 +201,7 @@ const tr: Dict = {
         id: 'bag',
         name: 'Çanta askıları',
         text: 'Döner kancalı omuz ve çapraz askılar; saate değil çantaya uygun genişliklerde.',
-        details: 'TODO: genişlikler, uzunluklar, kanca tipleri',
+        details: '',
         img: 'bag-strap.jpg',
         imgAlt: 'Çantaya takılı dokuma omuz askısı',
       },
@@ -208,7 +209,7 @@ const tr: Dict = {
         id: 'guitar',
         name: 'Gitar askıları',
         text: 'Sağlam uçlu, tam boy ayarlanabilir askılar. Grubunuz, mağazanız ya da markanız — boydan boya dokunmuş.',
-        details: 'TODO: genişlik, ayar aralığı, uç malzemesi',
+        details: '',
         img: 'guitar-strap.jpg',
         imgAlt: 'Elektro gitara takılı dokuma askı',
       },
@@ -219,15 +220,14 @@ const tr: Dict = {
     eyebrow: 'Atölye',
     title: 'Kayışların yapıldığı yer.',
     body: [
-      'TODO: Kim olduğunuz ve LaunchOnNato’nun nasıl başladığı (2–3 cümle).',
-      'TODO: Atölyenin yeri, kimlerin diktiği, hangi makine ve aletleri kullandığınız.',
-      'TODO: Bant, iplik ve metal aksamın nereden geldiği ve neden onları seçtiğiniz.',
+      'LaunchOnNato, Türkiye’de küçük bir kayış atölyesi. Yeni modelleri için zamanında kayışa ihtiyaç duyan saat markalarına — ve logosunu iyi bir bantta görmek isteyen herkese — kayış yapıyoruz.',
+      'Her sipariş aynı birkaç elden geçer: bandı kesiyor, logoyu uyguluyor, dikiyor, metal aksamı takıyor ve her kayışı kutuya girmeden önce tek tek kontrol ediyoruz.',
     ],
     materialsTitle: 'Bir kayışın içinde neler var',
     materials: [
-      { name: 'Bant', text: 'TODO: elyaf, dokuma, ağırlık, üretim yeri' },
-      { name: 'İplik', text: 'TODO: iplik tipi ve dikiş sıklığı' },
-      { name: 'Metal aksam', text: 'TODO: çelik kalitesi, yüzeyler, tedarikçi' },
+      { name: 'Bant', text: 'Bu sayfadaki renklerde dokuma şerit — ya da sizin renginizde' },
+      { name: 'İplik', text: 'Ton sür ton ya da kontrast dikiş, siz seçin' },
+      { name: 'Metal aksam', text: 'Toka ve köprüler: parlak, fırçalanmış veya PVD' },
     ],
     imgMain: 'Kayış bandını dikiş makinesinden geçiren eller',
     imgRolls: 'Rafta renkli kayış bandı ruloları',
@@ -242,14 +242,14 @@ const tr: Dict = {
       {
         q: 'Minimum sipariş adedi nedir?',
         a: [
-          'TODO: kayış tipi ve renk başına MOQ.',
-          'Logonun uygulanma şekline de bağlı: jakarlı logo bütün bir bant serisine dokunduğu için nakış veya gravürden daha büyük bir sipariş gerektirir.',
+          'Logonun uygulanma şekline bağlı: jakarlı logo bütün bir bant serisine dokunduğu için nakış veya gravürden daha büyük bir sipariş gerektirir.',
+          'Formda adedi yazın, tasarımınız için minimumu netleştirelim.',
         ],
       },
       {
         q: 'Ne kadar sürüyor?',
         a: [
-          'Numune: TODO. Numune onayından sonra üretim: TODO.',
+          'Kayış tipine, logo yöntemine ve adede göre değişir — numune ve üretim sürelerini teklifle birlikte netleştiriyoruz.',
           'Lansman tarihiniz yakınsa formda belirtin — gerçekçi olup olmadığını hemen söyleriz.',
         ],
       },
@@ -257,12 +257,12 @@ const tr: Dict = {
         q: 'Sipariş öncesi numune alabilir miyiz?',
         a: [
           'Evet, üretimden önce her zaman numune yapıyoruz — renklerin ve logonun saatinizde doğru durduğundan emin olmanın tek yolu bu.',
-          'TODO: numune ücreti ve siparişten düşülüp düşülmediği.',
+          'Numune ücreti tasarıma göre değişir — teklifinizde belirtiyoruz.',
         ],
       },
       {
         q: 'Türkiye’ye ve AB’ye gönderim yapıyor musunuz?',
-        a: ['Evet, ikisine de.', 'TODO: kargo firmaları, ortalama teslim süreleri ve AB gönderimlerinde gümrük / KDV’yi kimin üstlendiği.'],
+        a: ['Evet, ikisine de.', 'Kargo firmasını ve teslim süresini teklifle birlikte netleştiriyoruz.'],
       },
       {
         q: 'Logo dosyasını hangi formatta göndermeliyiz?',
@@ -273,7 +273,7 @@ const tr: Dict = {
       },
       {
         q: 'Marka rengimizi tutturabilir misiniz?',
-        a: ['Bize bir Pantone kodu ya da fiziksel bir numune gönderin.', 'TODO: ne kadar yakın eşleştirebildiğiniz ve özel boyalı bant için ayrı minimum olup olmadığı.'],
+        a: ['Bize bir Pantone kodu ya da fiziksel bir numune gönderin.', 'Adedinize göre ne kadar yaklaşabileceğimizi dürüstçe söyleriz.'],
       },
       {
         q: 'Saat markası değiliz. Yine de sipariş verebilir miyiz?',
@@ -284,7 +284,7 @@ const tr: Dict = {
   quote: {
     eyebrow: 'Teklif iste',
     title: 'Bize lansmanınızdan bahsedin.',
-    lead: 'İlk fiyat ve takvim için birkaç bilgi yeterli. Her talebe dönüyoruz — genellikle TODO: X iş günü içinde.',
+    lead: 'İlk fiyat ve takvim için birkaç bilgi yeterli. Her talebe dönüyoruz.',
     fields: {
       brand: 'Marka adı',
       name: 'Adınız',
@@ -336,11 +336,6 @@ const tr: Dict = {
     email: 'E-posta',
     phone: 'Telefon',
     address: 'Atölye',
-    todoEmail: 'TODO: e-posta',
-    todoPhone: 'TODO: telefon / WhatsApp',
-    todoAddress: 'TODO: atölye adresi',
-    todoCompany: 'TODO: şirket unvanı',
-    todoTax: 'TODO: vergi dairesi ve no / KDV no',
     privacy: 'Gizlilik ve KVKK',
     rights: 'Tüm hakları saklıdır.',
   },

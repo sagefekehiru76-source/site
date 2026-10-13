@@ -47,8 +47,8 @@ to Formspree in `src/config.ts` (`provider: 'formspree'` + your endpoint). Note:
 | Photos / illustrations | `public/images/` |
 | Logo files | `public/brand/` |
 
-Any text in the copy files that starts with `TODO` shows on the page as a dashed placeholder chip, so nothing unfinished goes live
-unnoticed. When a value is filled in, the chip disappears.
+Any text in the copy files that starts with `TODO` shows on the page as a dashed placeholder chip — handy while drafting.
+Empty spec values (`''`) hide their table row; empty `details` hide the line under camera/bag/guitar straps.
 
 Fonts (self-hosted from Google Fonts via Fontsource, no external requests): **Young Serif** for headings,
 **Instrument Sans** for text, **IBM Plex Mono** for small labels. All three cover Turkish characters.
@@ -86,6 +86,10 @@ It crops/resizes anything too large to the size below and re-compresses it, so L
 | `og-image.jpg` | 1200×630 | Image shown when the link is shared (logo + a strap works well) |
 
 ## TODO before launch
+
+The live site shows no TODO markers: where real data is missing it uses neutral copy
+("Confirmed with your quote", "Small runs welcome — ask us", spec rows hidden, etc.).
+Replace that copy in `src/i18n/en.ts` / `tr.ts` as soon as you have the real numbers below.
 
 ### Contacts & legal — `src/config.ts`
 - [x] `contact.email` — info@natolaunch.ceo

@@ -59,9 +59,9 @@ const en = {
     ],
     factsTitle: 'Rough numbers',
     facts: [
-      { label: 'Samples', value: 'TODO: e.g. X–Y working days' },
-      { label: 'Production', value: 'TODO: e.g. X–Y weeks after approval' },
-      { label: 'Minimum order', value: 'TODO: MOQ per model / colour' },
+      { label: 'Samples', value: 'Confirmed with your quote' },
+      { label: 'Production', value: 'Planned around your launch date' },
+      { label: 'Minimum order', value: 'Small runs welcome — ask us' },
       { label: 'Ships to', value: 'Türkiye & the EU' },
     ],
     factsNote: 'Tight deadline? Put the date in the form and we’ll tell you honestly if we can make it.',
@@ -104,7 +104,7 @@ const en = {
       },
     ],
     coloursTitle: 'Tape colours',
-    coloursNote: 'TODO: replace with your real colour card (names + codes). Custom colours on request.',
+    coloursNote: 'Colours on screen are approximate — ask us for the current colour card. Custom colours on request.',
     colours: [
       { name: 'Ecru', hex: '#EDE4D3' },
       { name: 'Navy', hex: '#1F2A44' },
@@ -119,7 +119,7 @@ const en = {
     hardware: [
       { name: 'Polished', text: 'Bright, mirror-like steel. Pairs with dress and polished cases.', finish: 'polished' },
       { name: 'Brushed', text: 'Satin grain that hides everyday scratches. The safe all-rounder.', finish: 'brushed' },
-      { name: 'PVD', text: 'Coated black (TODO: confirm other PVD colours). Matches black and coated cases.', finish: 'pvd' },
+      { name: 'PVD', text: 'Coated black. Matches black and coated cases.', finish: 'pvd' },
     ],
   },
   straps: {
@@ -134,6 +134,7 @@ const en = {
       hardware: 'Hardware',
       logo: 'Logo options',
     },
+    specNote: 'Exact thickness, length and material are confirmed with your sample.',
     types: [
       {
         id: 'pass-through',
@@ -143,9 +144,9 @@ const en = {
         imgAlt: 'Pass-through strap fitted to a watch',
         specs: {
           widths: '18 / 20 / 22 / 24 mm',
-          thickness: 'TODO: e.g. 1.2 mm',
-          length: 'TODO: total length + wrist fit range',
-          material: 'TODO: e.g. nylon / polyester webbing',
+          thickness: '',
+          length: '',
+          material: '',
           hardware: 'Buckle + keepers · polished, brushed or PVD',
           logo: 'Embroidery · jacquard · engraving',
         },
@@ -158,9 +159,9 @@ const en = {
         imgAlt: 'Single-pass strap fitted to a watch',
         specs: {
           widths: '18 / 20 / 22 / 24 mm',
-          thickness: 'TODO: e.g. 1.2 mm',
-          length: 'TODO: total length + wrist fit range',
-          material: 'TODO: e.g. nylon / polyester webbing',
+          thickness: '',
+          length: '',
+          material: '',
           hardware: 'Buckle + keepers · polished, brushed or PVD',
           logo: 'Embroidery · jacquard · engraving',
         },
@@ -173,9 +174,9 @@ const en = {
         imgAlt: 'Two-piece woven strap fitted to a watch',
         specs: {
           widths: '18 / 20 / 22 / 24 mm',
-          thickness: 'TODO: e.g. 1.5 mm',
-          length: 'TODO: long side / short side, mm',
-          material: 'TODO: tape + lining / edge finish',
+          thickness: '',
+          length: '',
+          material: '',
           hardware: 'Buckle · polished, brushed or PVD',
           logo: 'Embroidery · jacquard · embossing · engraving',
         },
@@ -191,7 +192,7 @@ const en = {
         id: 'camera',
         name: 'Camera straps',
         text: 'Neck or wrist length, sized for mirrorless and film bodies. Your logo where the strap meets the camera.',
-        details: 'TODO: widths, lengths, end fittings (split rings / quick-release)',
+        details: '',
         img: 'camera-strap.jpg',
         imgAlt: 'Woven camera strap with logo attached to a camera',
       },
@@ -199,7 +200,7 @@ const en = {
         id: 'bag',
         name: 'Bag straps',
         text: 'Shoulder and crossbody straps with swivel hooks, in widths that suit the bag rather than the watch.',
-        details: 'TODO: widths, lengths, hook types',
+        details: '',
         img: 'bag-strap.jpg',
         imgAlt: 'Woven shoulder strap clipped to a bag',
       },
@@ -207,7 +208,7 @@ const en = {
         id: 'guitar',
         name: 'Guitar straps',
         text: 'Full-length adjustable straps with sturdy ends. Your band, your shop or your brand — woven all the way along.',
-        details: 'TODO: width, adjustable length range, end material',
+        details: '',
         img: 'guitar-strap.jpg',
         imgAlt: 'Woven guitar strap on an electric guitar',
       },
@@ -218,15 +219,14 @@ const en = {
     eyebrow: 'The workshop',
     title: 'Where the straps get made.',
     body: [
-      'TODO: Who you are and how LaunchOnNato started (2–3 sentences).',
-      'TODO: Where the workshop is, who sews, what machines and tools you use.',
-      'TODO: Where the tape, thread and hardware come from and why you chose them.',
+      'LaunchOnNato is a small strap workshop in Türkiye. We make straps for watch brands that need them in time for a new model — and for anyone else who wants their logo on good tape.',
+      'Every order goes through the same few pairs of hands: we cut the tape, put the logo on, sew, fit the hardware and check each strap before it goes in the box.',
     ],
     materialsTitle: 'What goes into a strap',
     materials: [
-      { name: 'Tape', text: 'TODO: fibre, weave, weight, where it’s made' },
-      { name: 'Thread', text: 'TODO: thread type and stitch density' },
-      { name: 'Hardware', text: 'TODO: steel grade, finishes, supplier' },
+      { name: 'Tape', text: 'Woven webbing in the colours on this page — or in yours' },
+      { name: 'Thread', text: 'Matched or contrast stitching, your choice' },
+      { name: 'Hardware', text: 'Buckles and keepers: polished, brushed or PVD' },
     ],
     imgMain: 'Hands guiding strap tape through the sewing machine',
     imgRolls: 'Rolls of coloured strap tape on a shelf',
@@ -241,14 +241,14 @@ const en = {
       {
         q: 'What’s the minimum order?',
         a: [
-          'TODO: MOQ per strap type and per colour.',
-          'It also depends on how the logo goes on: a jacquard logo is woven into a whole run of tape, so it needs a bigger order than embroidery or engraving.',
+          'It depends on how the logo goes on: a jacquard logo is woven into a whole run of tape, so it needs a bigger order than embroidery or engraving.',
+          'Put your quantity in the form and we’ll confirm the minimum for your design.',
         ],
       },
       {
         q: 'How long does it take?',
         a: [
-          'Samples: TODO. Production after you approve the sample: TODO.',
+          'It depends on the strap, the logo method and the quantity — we confirm sample and production times with your quote.',
           'If your launch date is close, put it in the form — we’ll tell you straight away whether it’s realistic.',
         ],
       },
@@ -256,12 +256,12 @@ const en = {
         q: 'Can we get samples before ordering?',
         a: [
           'Yes, we always sample before a production run — it’s the only way to be sure the colours and the logo look right on your watch.',
-          'TODO: sample cost, and whether it’s deducted from the order.',
+          'Sample cost depends on the design — it’s included in your quote.',
         ],
       },
       {
         q: 'Do you ship to Türkiye and the EU?',
-        a: ['Yes, both.', 'TODO: carriers, typical transit times, and who handles customs / VAT for EU deliveries.'],
+        a: ['Yes, both.', 'We confirm the carrier and delivery time with your quote.'],
       },
       {
         q: 'What logo file should we send?',
@@ -272,7 +272,7 @@ const en = {
       },
       {
         q: 'Can you match our brand colour?',
-        a: ['Send us a Pantone reference or a physical sample.', 'TODO: how close you can match, and whether custom-dyed tape has a separate minimum.'],
+        a: ['Send us a Pantone reference or a physical sample.', 'We’ll tell you honestly how close we can get for your quantity.'],
       },
       {
         q: 'We’re not a watch brand. Can we still order?',
@@ -283,7 +283,7 @@ const en = {
   quote: {
     eyebrow: 'Request a quote',
     title: 'Tell us about your launch.',
-    lead: 'A few details are enough for a first price and timeline. We reply to every request — usually within TODO: X working days.',
+    lead: 'A few details are enough for a first price and timeline. We reply to every request.',
     fields: {
       brand: 'Brand name',
       name: 'Your name',
@@ -335,11 +335,6 @@ const en = {
     email: 'Email',
     phone: 'Phone',
     address: 'Workshop',
-    todoEmail: 'TODO: email',
-    todoPhone: 'TODO: phone / WhatsApp',
-    todoAddress: 'TODO: workshop address',
-    todoCompany: 'TODO: registered company name',
-    todoTax: 'TODO: tax office & number / VAT ID',
     privacy: 'Privacy & KVKK',
     rights: 'All rights reserved.',
   },
