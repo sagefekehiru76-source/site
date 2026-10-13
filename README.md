@@ -77,7 +77,7 @@ It crops/resizes anything too large to the size below and re-compresses it, so L
 ## TODO before launch
 
 ### Contacts & legal — `src/config.ts`
-- [ ] `contact.email`
+- [x] `contact.email` — info@natolaunch.ceo
 - [ ] `contact.phone` (phone / WhatsApp)
 - [ ] `contact.address` (workshop address)
 - [ ] `legal.companyName` (registered company name)

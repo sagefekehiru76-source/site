@@ -7,8 +7,7 @@ export const site = {
 };
 
 export const contact = {
-  // TODO: real email, e.g. hello@launchonnato.com
-  email: '',
+  email: 'info@natolaunch.ceo',
   // TODO: real phone / WhatsApp in international format, e.g. +90 5xx xxx xx xx
   phone: '',
   // TODO: workshop address (street, district, city, postcode, country)
