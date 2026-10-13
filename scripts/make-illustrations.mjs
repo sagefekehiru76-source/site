@@ -204,6 +204,22 @@ function lockup({ dark = false } = {}) {
 </svg>`;
 }
 
+/** Square logo: mark above the wordmark, centred (for avatars, documents, print). */
+function squareLockup({ dark = false, bg = true, size = 800 } = {}) {
+  // fit the wordmark to ~78% of the width, then centre mark + wordmark vertically
+  const ts = (100 * size * 0.78) / width('LaunchOnNato', 100);
+  const markS = size * 0.36, gap = size * 0.07, capH = ts * 0.72;
+  const w1 = width('LaunchOn', ts), tw = w1 + width('Nato', ts);
+  const my = (size - (markS + gap + capH)) / 2;
+  const x0 = (size - tw) / 2, ty = my + markS + gap + capH;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+  ${bg ? `<rect width="${size}" height="${size}" fill="${dark ? C.navy : C.cream}"/>` : ''}
+  <g transform="translate(${(size - markS) / 2} ${my}) scale(${markS / 64})">${markBody(dark ? C.navy2 : C.navy)}</g>
+  ${text('LaunchOn', x0, ty, ts, { fill: dark ? C.cream : C.ink })}
+  ${text('Nato', x0 + w1, ty, ts, { fill: dark ? C.mustard : C.terra })}
+</svg>`;
+}
+
 // ---------- scenes ----------
 const scenes = {};
 
@@ -434,4 +450,13 @@ const tmp = join(BRAND, '.fav32.png');
 await sharp(Buffer.from(markSVG(64)), { density: 300 }).resize(32, 32).png().toFile(tmp);
 execSync(`convert "${tmp}" "${join(ROOT, 'public/favicon.ico')}"`);
 unlinkSync(tmp);
+for (const [name, opts] of [
+  ['logo-square.png', {}],
+  ['logo-square-dark.png', { dark: true }],
+  ['logo-square-transparent.png', { bg: false }],
+]) {
+  await sharp(Buffer.from(squareLockup(opts))).png().toFile(join(BRAND, name));
+}
+writeFileSync(join(BRAND, 'logo-square.svg'), squareLockup());
+await sharp(Buffer.from(markSVG(64)), { density: 1200 }).resize(800, 800).png().toFile(join(BRAND, 'logo-mark-800.png'));
 console.log('wrote logo + favicons');
