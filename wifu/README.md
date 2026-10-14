@@ -36,6 +36,17 @@ npm run check      # проверка типов
 Сначала укажите домен: переменная окружения `SITE_URL` (например `https://wifu.app`) в настройках хостинга
 или прямо в `astro.config.mjs`. От домена зависят canonical-ссылки, Open Graph, `sitemap-index.xml` и `robots.txt`.
 
+**Ваш хостинг по SSH (GitHub Actions, настроено):** `.github/workflows/deploy-wifu.yml` собирает сайт и заливает
+`wifu/dist/` на хостинг при каждом пуше в ветку `claude/project-thread-jsoiyz`, если менялась папка `wifu/`.
+Запустить вручную: Actions → Deploy Wifu → Run workflow. Один раз в GitHub, в Settings → Secrets and variables → Actions:
+1. Секреты `SSH_HOST`, `SSH_PORT`, `SSH_USER`, `SSH_PASSWORD` (общие с деплоем сайта LaunchOnNato).
+2. Переменная (вкладка *Variables*) `WIFU_DEPLOY_PATH` — папка сайта на сервере, например `domains/wifupad.com/public_html`.
+   Сначала добавьте домен в панели хостинга, чтобы папка появилась. Папку деплой никогда не угадывает и откажется
+   заливать в папку сайта natolaunch.
+3. По желанию переменная `WIFU_SITE_URL` (например `https://wifupad.com`); если её нет, адрес берётся из имени папки.
+
+Форма на этом хостинге: Netlify Forms работают только на Netlify, поэтому здесь переключите формы на Formspree (ниже).
+
 **Netlify (проще всего — формы работают сразу):**
 1. Add new site → Import from Git → этот репозиторий.
 2. **Base directory: `wifu`**. Build command и publish directory подтянутся из `wifu/netlify.toml` (`npm run build` → `dist`).

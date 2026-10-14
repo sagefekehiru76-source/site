@@ -56,6 +56,7 @@ export const socials = [
  * - 'none'      — nothing is sent; the form just shows the "thank you" screen (handy for previews).
  */
 export const forms = {
+  // On your own hosting (not Netlify) use 'formspree' and fill in the endpoints below.
   provider: 'netlify' as 'netlify' | 'formspree' | 'none',
   formspree: {
     // TODO: create forms at https://formspree.io and paste the endpoints, e.g. 'https://formspree.io/f/abcdwxyz'

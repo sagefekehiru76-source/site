@@ -1,0 +1,97 @@
+# Builds the Wifu site (folder wifu/) and uploads it to the hosting over SSH.
+# Runs on every push to the Wifu branch that changes wifu/, or by hand (Actions → Deploy Wifu → Run workflow).
+#
+# One-time setup in GitHub: Settings → Secrets and variables → Actions
+#   Secrets (shared with the other site's deploy): SSH_HOST, SSH_PORT, SSH_USER, SSH_PASSWORD
+#   Variables:
+#     WIFU_DEPLOY_PATH — required, the Wifu site's folder on the server, e.g. domains/wifupad.com/public_html
+#     WIFU_SITE_URL    — optional, the public address, e.g. https://wifupad.com (used for canonical links, sitemap, OG)
+#
+# Safety: the folder is never guessed. The job stops if WIFU_DEPLOY_PATH is empty, if the folder
+# does not exist on the server, or if it is the other site's folder (natolaunch).
+name: Deploy Wifu
+
+on:
+  push:
+    branches: [claude/project-thread-jsoiyz]
+    paths: ['wifu/**', '.github/workflows/deploy-wifu.yml']
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-wifu
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wifu
+    env:
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSHPASS: ${{ secrets.SSH_PASSWORD }}
+      DEPLOY_PATH: ${{ vars.WIFU_DEPLOY_PATH }}
+      SITE_URL: ${{ vars.WIFU_SITE_URL }}
+    steps:
+      - name: Check secrets
+        working-directory: .
+        run: |
+          for v in SSH_HOST SSH_PORT SSH_USER SSHPASS; do
+            if [ -z "${!v}" ]; then
+              echo "::error::Missing secret for $v — add SSH_HOST, SSH_PORT, SSH_USER, SSH_PASSWORD in Settings → Secrets and variables → Actions"
+              exit 1
+            fi
+          done
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: wifu/package-lock.json
+
+      - run: npm ci
+
+      - name: Build
+        run: |
+          if [ -z "$SITE_URL" ] && [ -n "$DEPLOY_PATH" ]; then
+            # domains/wifupad.com/public_html → https://wifupad.com
+            domain=$(printf '%s' "$DEPLOY_PATH" | sed -n 's#^domains/\([^/]*\)/.*#\1#p')
+            [ -n "$domain" ] && export SITE_URL="https://$domain"
+          fi
+          echo "SITE_URL=${SITE_URL:-<not set, using placeholder>}"
+          npm run build
+
+      - name: Prepare SSH
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq sshpass rsync
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "$SSH_PORT" "$SSH_HOST" >> ~/.ssh/known_hosts
+
+      - name: Check target folder
+        run: |
+          ssh_run() { sshpass -e ssh -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "$@"; }
+          echo "Sites on the server:"
+          ssh_run 'ls -d domains/*/public_html 2>/dev/null; ls -ld public_html 2>/dev/null' || true
+          if [ -z "$DEPLOY_PATH" ]; then
+            echo "::error::Set the repository variable WIFU_DEPLOY_PATH to the Wifu site's folder (one of the paths listed above)"
+            exit 1
+          fi
+          case "$DEPLOY_PATH" in
+            *natolaunch*|*launchonnato*) echo "::error::$DEPLOY_PATH belongs to the other site — refusing to overwrite it"; exit 1 ;;
+          esac
+          if ! ssh_run "test -d '$DEPLOY_PATH'"; then
+            echo "::error::Folder $DEPLOY_PATH does not exist on the server. Add the domain in the hosting panel first."
+            exit 1
+          fi
+          echo "Deploying to: $DEPLOY_PATH"
+
+      - name: Upload
+        run: |
+          # --delete only affects files inside DEPLOY_PATH; .well-known (SSL checks) is kept
+          sshpass -e rsync -rlz --delete --exclude '.well-known' \
+            -e "ssh -p $SSH_PORT" dist/ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/"
+          echo "Done: uploaded to $DEPLOY_PATH"
