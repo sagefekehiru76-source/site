@@ -34,7 +34,7 @@ npm run check      # проверка типов
 ## Деплой
 
 Домен: **wifupad.com** (задан в `astro.config.mjs`, можно переопределить переменной окружения `SITE_URL`)
-или прямо в `astro.config.mjs`. От домена зависят canonical-ссылки, Open Graph, `sitemap-index.xml` и `robots.txt`.
+От домена зависят canonical-ссылки, Open Graph, `sitemap-index.xml` и `robots.txt`.
 
 **Ваш хостинг по SSH (GitHub Actions, настроено):** `.github/workflows/deploy-wifu.yml` собирает сайт и заливает
 `wifu/dist/` в `domains/wifupad.com/public_html` при каждом пуше в ветку `claude/project-thread-jsoiyz`, если менялась
