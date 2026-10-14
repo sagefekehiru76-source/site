@@ -29,6 +29,8 @@ const org = {
   legalName: brand.legalName,
   url: site.href,
   logo: new URL('/apple-touch-icon.png', site).href,
+  email: brand.email,
+  address: { '@type': 'PostalAddress', streetAddress: 'Turgut Özal Bulvarı 227', addressLocality: 'Maltepe, İstanbul', postalCode: '34844', addressCountry: 'TR' },
 };
 ---
 <!doctype html>

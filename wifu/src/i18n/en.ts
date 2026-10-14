@@ -177,6 +177,7 @@ const en = {
     success: 'Thank you! We’ll write back soon.',
     error: 'Something went wrong. Please try again or email us.',
     privacyNote: 'We only use your email to reply to you.',
+    orEmail: 'Prefer email? Write to',
   },
 
   footer: {
@@ -191,6 +192,7 @@ const en = {
     demoInvite: 'Demo invitation',
     rights: 'All rights reserved.',
     follow: 'Follow us',
+    owners: 'Owners',
   },
 
   // Strings inside the drawn device mockups on the home page.
@@ -403,6 +405,10 @@ const en = {
       body: 'TODO: legal text of the terms of use.',
     },
     company: 'Service provider',
+    owners: 'Owners',
+    address: 'Address',
+    email: 'Email',
+    phone: 'Phone',
     updated: 'Last updated: TODO',
   },
 

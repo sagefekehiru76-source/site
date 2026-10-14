@@ -11,11 +11,31 @@ export const brand = {
   name: 'Wifu',
   /** Registered company name (footer, legal pages, structured data). */
   legalName: 'WIFU YAZILIM VE ORGANİZASYON HİZMETLERİ A.Ş.',
-  /** TODO: registered address. */
-  address: 'TODO: legal address',
-  /** TODO: support email, e.g. hello@yourdomain.com */
-  email: 'TODO: support email',
+  /** Company address (footer, legal pages). Uses the Istanbul owner's address. */
+  address: 'Turgut Özal Bulvarı 227, Maltepe, İstanbul 34844, Türkiye',
+  /** Work email: footer, legal pages, contact block. */
+  email: 'info@wifupad.com',
 };
+
+/**
+ * Company owners shown in the footer and on the legal pages.
+ * `phone` is shown as written; `tel` is the dial string for the link (leave '' to show the number without a link).
+ */
+export const owners = [
+  {
+    name: 'Cahit Baş',
+    address: '177/18. Sokak, Karabağlar, İzmir 35140, Türkiye',
+    phone: '+90 232 237 72 21',
+    tel: '+902322377221',
+  },
+  {
+    name: 'Yücel Efe',
+    address: 'Turgut Özal Bulvarı 227, Maltepe, İstanbul 34844, Türkiye',
+    // TODO: this number has one digit too few for a Turkish number (0216 + 7 digits expected). Check and fix.
+    phone: '0216 383 492',
+    tel: '',
+  },
+];
 
 /** "Create your website" buttons point here. TODO: replace with the sign-up / app URL when it exists. */
 export const appUrl = '#get-started';

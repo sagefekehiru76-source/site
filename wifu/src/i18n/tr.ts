@@ -178,6 +178,7 @@ const tr: Dict = {
     success: 'Teşekkürler! En kısa sürede yanıt vereceğiz.',
     error: 'Bir şeyler ters gitti. Lütfen tekrar deneyin ya da bize e-posta gönderin.',
     privacyNote: 'E-posta adresinizi yalnızca size yanıt vermek için kullanırız.',
+    orEmail: 'E-postayı mı tercih edersiniz? Yazın:',
   },
 
   footer: {
@@ -192,6 +193,7 @@ const tr: Dict = {
     demoInvite: 'Örnek davetiye',
     rights: 'Tüm hakları saklıdır.',
     follow: 'Bizi takip edin',
+    owners: 'Şirket sahipleri',
   },
 
   mockups: {
@@ -403,6 +405,10 @@ const tr: Dict = {
       body: 'TODO: kullanım koşullarının hukuki metni.',
     },
     company: 'Hizmet sağlayıcı',
+    owners: 'Şirket sahipleri',
+    address: 'Adres',
+    email: 'E-posta',
+    phone: 'Telefon',
     updated: 'Son güncelleme: TODO',
   },
 

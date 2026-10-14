@@ -3,7 +3,7 @@ import Logo from './Logo.astro';
 import LangSwitch from './LangSwitch.astro';
 import SocialLinks from './SocialLinks.astro';
 import T from './T.astro';
-import { brand } from '../config';
+import { brand, owners } from '../config';
 import { localePath, t, type Lang } from '../i18n';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -52,8 +52,20 @@ const year = new Date().getFullYear();
       <div class="col-span-2 sm:col-span-3">
         <h2 class="mb-2 font-sans text-sm font-medium text-paper/60">{f.contact}</h2>
         <p class="text-paper/90 [&_.todo]:border-paper/50 [&_.todo]:text-paper/85 [&_.todo]:bg-paper/5">
-          {brand.email.startsWith('TODO') ? <T v={brand.email} /> : <a href={`mailto:${brand.email}`} class="hover:underline">{brand.email}</a>}
+          {brand.email.startsWith('TODO') ? <T v={brand.email} /> : <a href={`mailto:${brand.email}`} class="hover:underline underline-offset-4">{brand.email}</a>}
         </p>
+      </div>
+      <div class="col-span-2 sm:col-span-3">
+        <h2 class="mb-3 font-sans text-sm font-medium text-paper/60">{f.owners}</h2>
+        <ul class="grid gap-5 text-sm sm:grid-cols-2">
+          {owners.map((o) => (
+            <li class="space-y-0.5 text-paper/80">
+              <p class="font-medium text-paper">{o.name}</p>
+              <p>{o.address}</p>
+              <p>{o.tel ? <a href={`tel:${o.tel}`} class="hover:underline underline-offset-4">{o.phone}</a> : o.phone}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   </div>

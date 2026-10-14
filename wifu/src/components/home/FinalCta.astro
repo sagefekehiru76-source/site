@@ -1,6 +1,7 @@
 ---
 import Icon from '../Icon.astro';
 import { appHref } from '../../lib/links';
+import { brand } from '../../config';
 import { formAttrs } from '../../lib/forms';
 import { localePath, t, type Lang } from '../../i18n';
 interface Props { lang: Lang }
@@ -40,7 +41,8 @@ const attrs = formAttrs('contact', localePath(lang, 'thanks'));
           <p class="text-sm text-ink-soft">{c.privacyNote}</p>
           <button type="submit" class="btn btn-primary w-full sm:w-auto" data-sending={c.sending}>{c.submit}</button>
         </form>
-        <p data-error class="mt-4 hidden text-sm text-terra" role="alert">{c.error}</p>
+        <p class="mt-6 border-t border-line pt-4 text-sm text-ink-soft">{c.orEmail} <a href={`mailto:${brand.email}`} class="link text-ink">{brand.email}</a></p>
+        <p data-error class="mt-4 hidden text-sm text-terra" role="alert">{c.error} <a href={`mailto:${brand.email}`} class="underline">{brand.email}</a></p>
         <div data-success class="hidden py-6" tabindex="-1" role="status">
           <p class="flex items-center gap-2 font-display text-2xl"><Icon name="check" size={24} class="text-sage-dark" />{c.success}</p>
         </div>
