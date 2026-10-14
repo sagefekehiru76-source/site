@@ -1,5 +1,5 @@
 // Progressive enhancement for forms marked with [data-form].
-// Without JS the form posts normally (Netlify/Formspree) and the browser goes to the thank-you page.
+// Without JS the form posts normally (Netlify/Formspree), opens the email app (mailto) or goes to the thank-you page.
 // With JS it is sent in the background and the [data-success] block is shown in place.
 function encode(data: FormData) {
   return new URLSearchParams(data as unknown as Record<string, string>).toString();
@@ -25,6 +25,11 @@ for (const form of document.querySelectorAll<HTMLFormElement>('form[data-form]')
       } else if (provider === 'formspree' && form.action) {
         const res = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
         if (!res.ok) throw new Error(String(res.status));
+      } else if (provider === 'mailto') {
+        const get = (k: string) => String(data.get(k) ?? '').trim();
+        const subject = form.dataset.subject ?? 'Wifu';
+        const body = `${get('message')}\n\n${get('name')}\n${get('email')}`;
+        window.location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       }
       // provider "none": nothing is sent, we just show the thank-you state.
       root.dispatchEvent(new CustomEvent('form:success', { detail: data }));

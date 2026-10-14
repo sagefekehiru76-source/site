@@ -50,16 +50,21 @@ export const socials = [
 ] as const;
 
 /**
- * Form backend.
- * - 'netlify'   — Netlify Forms. Works automatically when the site is hosted on Netlify.
- * - 'formspree' — Formspree. Works on any host (Vercel, etc.). Put your form endpoints below.
- * - 'none'      — nothing is sent; the form just shows the "thank you" screen (handy for previews).
+ * Form backend, set per form.
+ * - 'mailto'    — opens the visitor's email app with the message ready to send to brand.email. Works on any host.
+ * - 'netlify'   — Netlify Forms. Works only when the site is hosted on Netlify.
+ * - 'formspree' — Formspree. Works on any host; put the form endpoints below.
+ * - 'none'      — nothing is sent; the form just shows the "thank you" screen (used by the demo RSVP).
  */
+type FormProvider = 'mailto' | 'netlify' | 'formspree' | 'none';
 export const forms = {
-  // On your own hosting (not Netlify) use 'formspree' and fill in the endpoints below.
-  provider: 'netlify' as 'netlify' | 'formspree' | 'none',
+  provider: {
+    contact: 'mailto' as FormProvider,
+    rsvpDemo: 'none' as FormProvider,
+  },
   formspree: {
-    // TODO: create forms at https://formspree.io and paste the endpoints, e.g. 'https://formspree.io/f/abcdwxyz'
+    // To receive messages without the visitor's email app: create a form at https://formspree.io,
+    // paste its endpoint here (e.g. 'https://formspree.io/f/abcdwxyz') and set provider.contact to 'formspree'.
     contact: '',
     rsvpDemo: '',
   },

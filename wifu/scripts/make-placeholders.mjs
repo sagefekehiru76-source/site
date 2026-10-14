@@ -34,7 +34,7 @@ const SANS = 'Carlito, DejaVu Sans, sans-serif';
 const photos = {
   'hero-couple.jpg': [1200, 1500, [C.clay, C.sand]],
   'rsvp-couple.jpg': [1200, 1500, [C.sage, C.paper2]],
-  'guests-envelopes.jpg': [1200, 900, [C.sand, C.paper]],
+  'guests-celebration.jpg': [1200, 900, [C.sand, C.paper]],
   'demo-couple-cover.jpg': [1920, 1280, [C.sageDark, C.sand]],
   'demo-story.jpg': [1000, 1250, [C.clay, C.paper2]],
   'demo-venue.jpg': [1500, 1000, [C.sage, C.sand]],

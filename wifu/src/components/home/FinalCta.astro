@@ -1,7 +1,7 @@
 ---
 import Icon from '../Icon.astro';
 import { appHref } from '../../lib/links';
-import { brand } from '../../config';
+import { brand, forms } from '../../config';
 import { formAttrs } from '../../lib/forms';
 import { localePath, t, type Lang } from '../../i18n';
 interface Props { lang: Lang }
@@ -22,7 +22,7 @@ const attrs = formAttrs('contact', localePath(lang, 'thanks'));
       <div aria-hidden="true" class="mx-6 h-10 bg-line/70 [clip-path:polygon(0_100%,50%_0,100%_100%)]"></div>
       <div class="card p-6 sm:p-8">
         <h3 class="text-2xl">{c.formTitle}</h3>
-        <form {...attrs} data-form class="mt-6 space-y-4">
+        <form {...attrs} data-form data-subject={c.mailSubject} class="mt-6 space-y-4">
           <input type="hidden" name="form-name" value="contact" />
           <input type="hidden" name="language" value={lang} />
           <p class="hidden"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
@@ -44,7 +44,7 @@ const attrs = formAttrs('contact', localePath(lang, 'thanks'));
         <p class="mt-6 border-t border-line pt-4 text-sm text-ink-soft">{c.orEmail} <a href={`mailto:${brand.email}`} class="link text-ink">{brand.email}</a></p>
         <p data-error class="mt-4 hidden text-sm text-terra" role="alert">{c.error} <a href={`mailto:${brand.email}`} class="underline">{brand.email}</a></p>
         <div data-success class="hidden py-6" tabindex="-1" role="status">
-          <p class="flex items-center gap-2 font-display text-2xl"><Icon name="check" size={24} class="text-sage-dark" />{c.success}</p>
+          <p class="flex items-center gap-2 font-display text-2xl"><Icon name="check" size={24} class="text-sage-dark" />{forms.provider.contact === 'mailto' ? c.mailtoSuccess : c.success}</p>
         </div>
       </div>
     </div>

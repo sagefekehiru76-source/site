@@ -30,7 +30,7 @@ const tilt = ['-rotate-2', 'rotate-1', '-rotate-1', 'rotate-2', '-rotate-1', 'ro
     ))}
   </ul>
   <div class="wrap">
-    <p class="text-sm text-ink-soft"><T v={v.designsNote} /></p>
+    {v.designsNote && <p class="text-sm text-ink-soft"><T v={v.designsNote} /></p>}
 
     <div class="mt-12 grid gap-8 border-t border-line pt-10 lg:grid-cols-[1fr_2fr] lg:items-center">
       <h3 class="text-2xl">{v.sendTitle}</h3>
