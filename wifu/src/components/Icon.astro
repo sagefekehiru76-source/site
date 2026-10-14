@@ -4,15 +4,15 @@ import {
   ArrowRight, ArrowUpRight, Bed, Bus, CalendarPlus, Check, ChevronDown, CircleHelp, Clock, Globe, Heart, Link, Lock,
   Mail, MapPin, Menu, MessageCircle, Navigation, Plus, QrCode, Send, Shirt, Smartphone, UserPlus, Utensils, X,
 } from 'lucide-static';
-import { siInstagram, siPinterest, siTelegram, siTiktok } from 'simple-icons';
+import { siInstagram, siPinterest, siTelegram, siTiktok, siX } from 'simple-icons';
 
 const lucide = {
   'arrow-right': ArrowRight, 'arrow-up-right': ArrowUpRight, bed: Bed, bus: Bus, calendar: CalendarPlus, check: Check,
   'chevron-down': ChevronDown, help: CircleHelp, clock: Clock, globe: Globe, heart: Heart, link: Link, lock: Lock,
   mail: Mail, 'map-pin': MapPin, menu: Menu, message: MessageCircle, navigation: Navigation, plus: Plus, qr: QrCode,
-  send: Send, shirt: Shirt, phone: Smartphone, 'user-plus': UserPlus, utensils: Utensils, x: X,
+  send: Send, shirt: Shirt, phone: Smartphone, 'user-plus': UserPlus, utensils: Utensils, close: X,
 };
-const brands = { instagram: siInstagram, tiktok: siTiktok, pinterest: siPinterest, telegram: siTelegram };
+const brands = { instagram: siInstagram, tiktok: siTiktok, pinterest: siPinterest, telegram: siTelegram, x: siX };
 export type IconName = keyof typeof lucide | keyof typeof brands;
 
 interface Props {
