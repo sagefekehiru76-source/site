@@ -4,9 +4,9 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'node:url';
 
-// TODO: set your real domain here (or as the SITE_URL environment variable in Vercel/Netlify).
+// Real domain. Can be overridden with the SITE_URL environment variable.
 // It is used for canonical links, Open Graph URLs, sitemap.xml and robots.txt.
-const site = process.env.SITE_URL || 'https://www.example.com';
+const site = process.env.SITE_URL || 'https://wifupad.com';
 
 export default defineConfig({
   site,
