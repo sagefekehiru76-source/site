@@ -1,6 +1,6 @@
 /**
  * Site-wide settings that are not translated copy.
- * Translated texts live in src/i18n/en.ts and src/i18n/ru.ts.
+ * Translated texts live in src/i18n/tr.ts (main) and src/i18n/en.ts.
  *
  * Anything starting with "TODO" is shown on the page as a dashed placeholder chip,
  * so you can see at a glance what is still missing.

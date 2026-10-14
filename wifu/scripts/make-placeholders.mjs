@@ -163,10 +163,10 @@ if (fit) {
   for (const [name, [w, h, colours]] of Object.entries(photos)) await write(`images/${name}`, photoSvg(name, w, h, colours), w, h);
   for (let i = 1; i <= 6; i++) await write(`images/invite-design-0${i}.jpg`, inviteSvg(i), 800, 1120);
 
-  await write('images/og-default.jpg', ogSvg({ kicker: 'WEDDING WEBSITE · INVITATIONS · RSVP', title: ['Your wedding website', 'and invitations'], sub: 'Done in an evening. Guests reply from their phone.' }), 1200, 630);
-  await write('images/og-default-ru.jpg', ogSvg({ kicker: 'СВАДЕБНЫЙ САЙТ · ПРИГЛАШЕНИЯ · RSVP', title: ['Свадебный сайт', 'и приглашения'], sub: 'За один вечер. Гости отвечают с телефона.' }), 1200, 630);
-  await write('images/og-invite.jpg', ogSvg({ kicker: 'YOU’RE INVITED', title: ['Mira & Daniel', '12 June 2027'], sub: 'Open the invitation and reply in a minute.', invite: true }), 1200, 630);
-  await write('images/og-invite-ru.jpg', ogSvg({ kicker: 'ПРИГЛАШЕНИЕ', title: ['Мира и Даниэль', '12 июня 2027'], sub: 'Откройте приглашение и ответьте за минуту.', invite: true }), 1200, 630);
+  await write('images/og-default.jpg', ogSvg({ kicker: 'DÜĞÜN SİTESİ · DAVETİYE · LCV', title: ['Düğün siteniz', 've davetiyeleriniz'], sub: 'Bir akşamda hazır. Misafirler telefondan yanıt verir.' }), 1200, 630);
+  await write('images/og-default-en.jpg', ogSvg({ kicker: 'WEDDING WEBSITE · INVITATIONS · RSVP', title: ['Your wedding website', 'and invitations'], sub: 'Done in an evening. Guests reply from their phone.' }), 1200, 630);
+  await write('images/og-invite.jpg', ogSvg({ kicker: 'DAVETLİSİNİZ', title: ['Mira & Daniel', '12 Haziran 2027'], sub: 'Davetiyeyi açın, bir dakikada yanıt verin.', invite: true }), 1200, 630);
+  await write('images/og-invite-en.jpg', ogSvg({ kicker: 'YOU’RE INVITED', title: ['Mira & Daniel', '12 June 2027'], sub: 'Open the invitation and reply in a minute.', invite: true }), 1200, 630);
 
   await write('apple-touch-icon.png', favicon.replace('rx="14"', 'rx="0"'), 180, 180, 'png');
   await write('favicon-32.png', favicon, 32, 32, 'png');

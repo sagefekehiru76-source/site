@@ -1,4 +1,4 @@
-// English copy. Russian lives in ru.ts and must have the same shape.
+// English copy (secondary language, served under /en/). Turkish lives in tr.ts and must have the same shape.
 // Any string that starts with "TODO" shows on the page as a dashed placeholder chip.
 
 const en = {

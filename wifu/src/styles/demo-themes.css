@@ -8,7 +8,7 @@
   --t-line: #e4dccf;
   --t-accent: #a44e33;
   --t-accent-fg: #ffffff;
-  --t-display: 'Prata', Georgia, serif;
+  --t-display: 'Gloock', Georgia, serif;
   --t-display-case: none;
   --t-display-spacing: -0.01em;
   --t-radius: 0.75rem;
@@ -37,7 +37,7 @@
   --t-line: #3a4360;
   --t-accent: #d99a7e;
   --t-accent-fg: #1f2638;
-  --t-display: 'Golos Text Variable', 'Golos Text', system-ui, sans-serif;
+  --t-display: 'Figtree Variable', 'Figtree', system-ui, sans-serif;
   --t-display-case: uppercase;
   --t-display-spacing: 0.02em;
   --t-radius: 0;

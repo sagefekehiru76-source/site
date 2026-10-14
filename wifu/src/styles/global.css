@@ -14,8 +14,8 @@
   --color-sage-dark: #56634c;
   --color-wine: #6e2f3a;
 
-  --font-display: 'Prata', Georgia, 'Times New Roman', serif;
-  --font-sans: 'Golos Text Variable', 'Golos Text', system-ui, sans-serif;
+  --font-display: 'Gloock', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Figtree Variable', 'Figtree', system-ui, sans-serif;
 
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }

@@ -13,14 +13,14 @@ export default defineConfig({
   trailingSlash: 'always',
   build: { inlineStylesheets: 'always' },
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'ru'],
+    defaultLocale: 'tr',
+    locales: ['tr', 'en'],
     routing: { prefixDefaultLocale: false },
   },
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/thanks/') && !page.endsWith('.ics'),
-      i18n: { defaultLocale: 'en', locales: { en: 'en', ru: 'ru' } },
+      i18n: { defaultLocale: 'tr', locales: { tr: 'tr', en: 'en' } },
     }),
   ],
   // `tsconfig` is pinned so the build ignores the other site's tsconfig.json at the repository root.

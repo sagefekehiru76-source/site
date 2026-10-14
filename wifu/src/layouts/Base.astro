@@ -1,6 +1,6 @@
 ---
-import '@fontsource/prata';
-import '@fontsource-variable/golos-text';
+import '@fontsource/gloock';
+import '@fontsource-variable/figtree';
 import '../styles/global.css';
 import { brand } from '../config';
 import { languages, switchPath, t, type Lang } from '../i18n';
@@ -20,7 +20,7 @@ const { lang, title, description, ogImage, noindex = false, jsonLd } = Astro.pro
 const d = t(lang);
 const site = Astro.site!;
 const canonical = new URL(Astro.url.pathname, site).href;
-const og = new URL(asset(ogImage ?? (lang === 'ru' ? 'images/og-default-ru.jpg' : 'images/og-default.jpg')), site).href;
+const og = new URL(asset(ogImage ?? (lang === 'en' ? 'images/og-default-en.jpg' : 'images/og-default.jpg')), site).href;
 const alternates = (Object.keys(languages) as Lang[]).map((l) => ({ l, href: new URL(switchPath(Astro.url.pathname, l), site).href }));
 const org = {
   '@context': 'https://schema.org',

@@ -45,7 +45,7 @@ const meals = [41, 28, 17];
       <div class="mt-4 border-t border-line pt-3">
         <p class="mb-2 text-xs text-ink-soft">{m.latest}</p>
         <ul class="space-y-1.5 text-xs">
-          {m.rows.map(([n, s]) => <li class="flex justify-between"><span>{n}</span><span class:list={[s.includes('+1') || !/(Wait|Жд)/.test(s) ? 'text-sage-dark' : 'text-ink-soft']}>{s}</span></li>)}
+          {m.rows.map(([n, s]) => <li class="flex justify-between"><span>{n}</span><span class:list={[s.includes('+1') || !/(Wait|Bekl)/.test(s) ? 'text-sage-dark' : 'text-ink-soft']}>{s}</span></li>)}
         </ul>
       </div>
     </Fragment>

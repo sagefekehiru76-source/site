@@ -1,12 +1,12 @@
 import en from './en';
-import ru from './ru';
+import tr from './tr';
 
-// English is the main language (served at /), Russian lives under /ru/
-export const languages = { en: 'EN', ru: 'RU' } as const;
-export const defaultLang = 'en';
+// Turkish is the main language (served at /), English lives under /en/
+export const languages = { tr: 'TR', en: 'EN' } as const;
+export const defaultLang = 'tr';
 export type Lang = keyof typeof languages;
 
-const dicts = { en, ru };
+const dicts = { tr, en };
 
 export function t(lang: Lang) {
   return dicts[lang];
@@ -22,7 +22,7 @@ export function localePath(lang: Lang, path = '') {
 
 /** The same page in another language: strips the current prefix from a pathname. */
 export function switchPath(pathname: string, to: Lang) {
-  const bare = /\/404/.test(pathname) ? '' : pathname.replace(/^\/(ru)(\/|$)/, '/');
+  const bare = /\/404/.test(pathname) ? '' : pathname.replace(/^\/(en)(\/|$)/, '/');
   return localePath(to, bare);
 }
 
