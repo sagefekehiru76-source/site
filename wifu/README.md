@@ -136,7 +136,7 @@ npm run images:fit
 - [x] `owners` — владельцы: Cahit Baş (İzmir) и Yücel Efe (İstanbul), адреса и телефоны
 - [ ] Подтвердить, что данные владельцев настоящие, и исправить телефон Yücel Efe: в `0216383492` не хватает одной цифры
 - [x] X: https://x.com/wifupad
-- [ ] `socials` — ссылки на Instagram, TikTok, Pinterest, Telegram
+- [ ] `socials` — ссылка на Instagram
 - [ ] `appUrl` — куда ведут кнопки «Создать сайт» (сейчас на форму «Напишите нам»)
 - [ ] Текст политики конфиденциальности (с KVKK aydınlatma metni) и условий использования, дата обновления — `legal` в `tr.ts` / `en.ts`
 - [ ] Срок ответа на письма — `thanks.text`

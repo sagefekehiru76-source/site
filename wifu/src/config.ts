@@ -46,9 +46,6 @@ export const appUrl = '#get-started';
  */
 export const socials = [
   { name: 'Instagram', icon: 'instagram', href: '#TODO-instagram' },
-  { name: 'TikTok', icon: 'tiktok', href: '#TODO-tiktok' },
-  { name: 'Pinterest', icon: 'pinterest', href: '#TODO-pinterest' },
-  { name: 'Telegram', icon: 'telegram', href: '#TODO-telegram' },
   { name: 'X', icon: 'x', href: 'https://x.com/wifupad' },
 ] as const;
 
