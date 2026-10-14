@@ -1,0 +1,23 @@
+---
+// Thin bar on top of the demo pages: makes it obvious this is an example and links back.
+import Logo from '../Logo.astro';
+import LangSwitch from '../LangSwitch.astro';
+import { appHref } from '../../lib/links';
+import { localePath, t, type Lang } from '../../i18n';
+interface Props { lang: Lang; text: string }
+const { lang, text } = Astro.props;
+const d = t(lang);
+---
+<div class="relative z-30 bg-ink text-paper">
+  <div class="wrap flex min-h-12 flex-wrap items-center justify-between gap-x-4 gap-y-2 py-2 text-sm">
+    <div class="flex items-center gap-3">
+      <a href={localePath(lang)} aria-label={d.nav.home} class="[&_.font-display]:text-xl"><Logo light /></a>
+      <span class="rounded-full border border-paper/40 px-2 py-0.5 text-xs font-medium tracking-wide uppercase">{d.demo.badge}</span>
+      <span class="hidden text-paper/75 md:inline">{text}</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <LangSwitch lang={lang} class="[&_span[aria-current]]:bg-paper [&_span[aria-current]]:text-ink [&_a]:text-paper/75 [&_a:hover]:bg-paper/10 [&_a:hover]:text-paper" />
+      <a href={appHref(lang)} class="rounded-full bg-paper px-4 py-1.5 font-medium text-ink hover:bg-paper-2">{d.demo.bannerCta}</a>
+    </div>
+  </div>
+</div>

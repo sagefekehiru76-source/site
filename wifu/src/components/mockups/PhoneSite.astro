@@ -1,0 +1,33 @@
+---
+import PhoneFrame from './PhoneFrame.astro';
+import { mockupImages } from '../../config';
+import { img } from '../../lib/asset';
+import { t, type Lang } from '../../i18n';
+interface Props { lang: Lang; label: string; class?: string }
+const { lang, label, class: cls } = Astro.props;
+const m = t(lang).mockups;
+---
+<PhoneFrame label={label} class={cls} image={mockupImages.websitePhone}>
+  <div class="flex h-full flex-col text-[10px] leading-snug">
+    <div class="relative h-[46%] shrink-0">
+      <img src={img('demo-couple-cover.jpg')} alt="" width="1920" height="1280" class="size-full object-cover" loading="lazy" decoding="async" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent"></div>
+      <div class="absolute inset-x-0 bottom-0 p-4 text-paper">
+        <p class="font-display text-[22px] leading-tight">{m.names}</p>
+        <p class="mt-1 opacity-90">{m.date} · {m.place}</p>
+      </div>
+    </div>
+    <div class="flex gap-1.5 overflow-hidden border-b border-line px-3 py-2 text-[9px] text-ink-soft">
+      {m.nav.map((n, i) => <span class:list={['rounded-full px-2 py-0.5', i === 0 ? 'bg-ink text-paper' : 'bg-paper-2']}>{n}</span>)}
+    </div>
+    <div class="flex-1 space-y-2 px-4 pt-3">
+      <p class="inline-block rounded-full bg-sage/25 px-2 py-0.5 text-[9px] text-sage-dark">{m.countdown}</p>
+      <ul class="space-y-1.5">
+        {m.schedule.map(([time, what]) => (
+          <li class="flex gap-3 border-b border-dashed border-line pb-1.5"><span class="w-8 font-medium text-terra">{time}</span><span>{what}</span></li>
+        ))}
+      </ul>
+    </div>
+    <div class="p-3"><div class="rounded-full bg-ink py-2 text-center text-[11px] font-medium text-paper">{m.rsvpButton}</div></div>
+  </div>
+</PhoneFrame>

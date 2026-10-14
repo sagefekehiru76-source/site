@@ -1,0 +1,173 @@
+---
+import Base from '../layouts/Base.astro';
+import DemoBar from '../components/demo/DemoBar.astro';
+import ThemeSwitch from '../components/demo/ThemeSwitch.astro';
+import RsvpForm from '../components/demo/RsvpForm.astro';
+import Icon from '../components/Icon.astro';
+import '../styles/demo-themes.css';
+import { demoWeddingDate } from '../config';
+import { img } from '../lib/asset';
+import { localePath, t, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const x = d.demo;
+const sections = ['story', 'schedule', 'venue', 'stay', 'dresscode', 'faq', 'rsvp'] as const;
+---
+<Base lang={lang} title={d.meta.demo.title} description={d.meta.demo.description}>
+  <DemoBar lang={lang} text={x.banner} />
+  <div class="themed min-h-screen" data-theme="minimal">
+    <main id="main">
+      <!-- Cover -->
+      <section class="relative isolate flex min-h-[86svh] items-end overflow-hidden">
+        <img src={img('demo-couple-cover.jpg')} alt={x.cover.photoAlt} width="1920" height="1280" class="t-photo absolute inset-0 -z-10 size-full !rounded-none object-cover" fetchpriority="high" decoding="async" />
+        <div class="absolute inset-0 -z-10 bg-gradient-to-t from-black/65 via-black/15 to-transparent"></div>
+        <div class="wrap pb-14 text-[#fbf8f2] sm:pb-20">
+          <p class="text-lg">{x.cover.kicker}</p>
+          <h1 class="t-display mt-3 text-5xl sm:text-7xl lg:text-8xl">{x.cover.names}</h1>
+          <p class="mt-5 text-lg sm:text-xl">{x.cover.date}</p>
+          <p class="opacity-90">{x.cover.place}</p>
+          <a href="#rsvp" class="t-btn mt-8">{x.nav.rsvp}</a>
+        </div>
+      </section>
+
+      <!-- Section nav -->
+      <nav aria-label={x.nav.story} class="t-line sticky top-0 z-20 border-b bg-[var(--t-bg)]/95 backdrop-blur">
+        <ul class="wrap flex gap-1 overflow-x-auto py-2 text-sm whitespace-nowrap">
+          {sections.map((s) => <li><a href={`#${s}`} class="block rounded-full px-3 py-2 hover:bg-[var(--t-surface)]">{x.nav[s]}</a></li>)}
+        </ul>
+      </nav>
+
+      <!-- Countdown -->
+      <section class="wrap py-16 text-center" aria-labelledby="countdown-title">
+        <h2 id="countdown-title" class="t-muted text-base">{x.countdown.title}</h2>
+        <div class="mt-5 flex justify-center gap-6 sm:gap-12" data-countdown={demoWeddingDate} data-done={x.countdown.done}>
+          {(['days', 'hours', 'minutes'] as const).map((u) => (
+            <div><span class="t-display block text-5xl tabular-nums sm:text-6xl" data-unit={u}>–</span><span class="t-muted text-sm">{x.countdown[u]}</span></div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Story -->
+      <section id="story" class="wrap grid scroll-mt-16 gap-10 py-16 md:grid-cols-2 md:items-center">
+        <img src={img('demo-story.jpg')} alt={x.story.photoAlt} width="1000" height="1250" loading="lazy" decoding="async" class="t-photo aspect-[4/5] w-full object-cover" />
+        <div>
+          <h2 class="t-display text-4xl sm:text-5xl">{x.story.title}</h2>
+          {x.story.paragraphs.map((p) => <p class="mt-5 text-lg leading-relaxed">{p}</p>)}
+        </div>
+      </section>
+
+      <!-- Schedule -->
+      <section id="schedule" class="scroll-mt-16 py-16">
+        <div class="wrap max-w-3xl">
+          <h2 class="t-display text-center text-4xl sm:text-5xl">{x.schedule.title}</h2>
+          <ol class="mt-10">
+            {x.schedule.items.map((it) => (
+              <li class="t-line grid grid-cols-[4.5rem_1fr] gap-4 border-b py-5 sm:grid-cols-[7rem_1fr]">
+                <span class="t-display t-accent text-2xl">{it.time}</span>
+                <div><h3 class="text-lg font-medium">{it.title}</h3><p class="t-muted mt-1">{it.text}</p></div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <!-- Venue -->
+      <section id="venue" class="wrap scroll-mt-16 py-16">
+        <h2 class="t-display text-4xl sm:text-5xl">{x.venue.title}</h2>
+        <div class="mt-10 grid gap-6 lg:grid-cols-2">
+          <div class="t-card p-6 sm:p-8">
+            <h3 class="t-display text-3xl">{x.venue.name}</h3>
+            <p class="t-muted mt-2 flex items-start gap-2"><Icon name="map-pin" size={18} class="mt-1 shrink-0" />{x.venue.address}</p>
+            <p class="mt-5 text-lg">{x.venue.text}</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Lake+Garda" target="_blank" rel="noopener" class="t-btn t-btn-ghost mt-6"><Icon name="navigation" size={18} />{x.venue.directions}</a>
+          </div>
+          <img src={img('demo-venue.jpg')} alt={x.venue.photoAlt} width="1500" height="1000" loading="lazy" decoding="async" class="t-photo aspect-[3/2] size-full object-cover" />
+            <!-- Map placeholder: on a real website this is an embedded map. -->
+            <div class="t-card relative grid aspect-[4/3] place-items-center sm:aspect-[21/8] lg:col-span-2 overflow-hidden p-6 text-center" role="img" aria-label={x.venue.mapLabel}>
+              <svg class="absolute inset-0 size-full opacity-40" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 300 200">
+                <path d="M0 140 C 60 120, 90 160, 150 130 S 250 90, 300 110" fill="none" stroke="currentColor" stroke-width="10" stroke-opacity=".15" />
+                <path d="M40 0 L 120 200 M 0 60 L 300 40 M 200 0 L 230 200" stroke="currentColor" stroke-width="2" stroke-opacity=".25" fill="none" />
+              </svg>
+              <div class="relative">
+                <Icon name="map-pin" size={34} class="t-accent mx-auto" />
+                <p class="t-muted mt-2 text-sm">{x.venue.mapLabel}</p>
+              </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- Stay -->
+      <section id="stay" class="wrap scroll-mt-16 py-16">
+        <h2 class="t-display text-4xl sm:text-5xl">{x.stay.title}</h2>
+        <p class="t-muted mt-4 max-w-2xl text-lg">{x.stay.lead}</p>
+        <ul class="mt-8 grid gap-4 md:grid-cols-3">
+          {x.stay.hotels.map((h) => (
+            <li class="t-card p-6"><Icon name="bed" size={22} class="t-accent" /><h3 class="mt-3 text-xl font-medium">{h.name}</h3><p class="t-muted mt-1">{h.note}</p></li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- Dress code -->
+      <section id="dresscode" class="scroll-mt-16 py-16">
+        <div class="wrap max-w-3xl text-center">
+          <svg class="t-sprig t-accent mx-auto mb-6" width="120" height="28" viewBox="0 0 120 28" aria-hidden="true"><path d="M5 20 C 40 8, 80 8, 115 20" fill="none" stroke="currentColor" stroke-width="1.5"/><ellipse cx="40" cy="10" rx="8" ry="3.5" transform="rotate(-25 40 10)" fill="currentColor" opacity=".6"/><ellipse cx="62" cy="7" rx="8" ry="3.5" fill="currentColor" opacity=".6"/><ellipse cx="84" cy="10" rx="8" ry="3.5" transform="rotate(25 84 10)" fill="currentColor" opacity=".6"/></svg>
+          <h2 class="t-display text-4xl sm:text-5xl">{x.dresscode.title}</h2>
+          <p class="mt-6 text-lg leading-relaxed">{x.dresscode.text}</p>
+          <p class="t-muted mt-8 text-sm">{x.dresscode.palette}</p>
+          <ul class="mt-3 flex justify-center gap-3" aria-hidden="true">
+            {['#efe5d6', '#d9c7ad', '#8c9a7d', '#a44e33', '#1f2638'].map((c) => <li class="size-10 rounded-full border border-black/10" style={`background:${c}`}></li>)}
+          </ul>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="wrap max-w-3xl scroll-mt-16 py-16">
+        <h2 class="t-display text-center text-4xl sm:text-5xl">{x.faq.title}</h2>
+        <div class="t-line mt-10 divide-y divide-[var(--t-line)] border-y">
+          {x.faq.items.map((it) => (
+            <details class="group">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-medium [&::-webkit-details-marker]:hidden">{it.q}<Icon name="plus" size={20} class="t-accent shrink-0 transition-transform group-open:rotate-45" /></summary>
+              <p class="t-muted pb-6">{it.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <!-- RSVP -->
+      <section id="rsvp" class="scroll-mt-16 py-16 pb-28">
+        <div class="wrap max-w-2xl">
+          <div class="text-center">
+            <h2 class="t-display text-4xl sm:text-5xl">{x.rsvp.title}</h2>
+            <p class="t-muted mt-4 text-lg">{x.rsvp.lead}</p>
+          </div>
+          <div class="mt-10"><RsvpForm lang={lang} idPrefix="demo" /></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="t-line border-t py-10 pb-28 text-center text-sm">
+      <a href={localePath(lang)} class="t-muted hover:underline">{x.footer}</a>
+    </footer>
+
+    <ThemeSwitch label={x.themeLabel} themes={x.themes} class="fixed bottom-4 left-1/2 z-30 -translate-x-1/2" />
+  </div>
+
+  <script>
+    // Countdown to the demo wedding date (local time of the visitor).
+    const el = document.querySelector<HTMLElement>('[data-countdown]');
+    if (el) {
+      const target = new Date(el.dataset.countdown!).getTime();
+      const tick = () => {
+        const ms = Math.max(0, target - Date.now());
+        const set = (u: string, v: number) => { el.querySelector(`[data-unit="${u}"]`)!.textContent = String(v); };
+        set('days', Math.floor(ms / 864e5));
+        set('hours', Math.floor((ms / 36e5) % 24));
+        set('minutes', Math.floor((ms / 6e4) % 60));
+        if (ms === 0) el.textContent = el.dataset.done!;
+      };
+      tick();
+      setInterval(tick, 30_000);
+    }
+  </script>
+</Base>

@@ -1,0 +1,30 @@
+---
+import Icon from '../Icon.astro';
+import T from '../T.astro';
+import { t, type Lang } from '../../i18n';
+interface Props { lang: Lang; title?: string; eyebrow?: string; items?: { q: string; a: string }[]; id?: string }
+const { lang, id = "faq" } = Astro.props as Props;
+const f = t(lang).faq;
+const title = Astro.props.title ?? f.title;
+const eyebrow = Astro.props.eyebrow ?? f.eyebrow;
+const items: { q: string; a: string }[] = (Astro.props as Props).items ?? f.items;
+---
+<section id={id} class="py-20 lg:py-24">
+  <div class="wrap grid gap-10 lg:grid-cols-[1fr_1.6fr]">
+    <div>
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 class="h2 mt-3 lg:sticky lg:top-24">{title}</h2>
+    </div>
+    <div class="divide-y divide-line border-y border-line">
+      {items.map((it) => (
+        <details class="group">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-medium [&::-webkit-details-marker]:hidden">
+            {it.q}
+            <Icon name="plus" size={20} class="shrink-0 text-terra transition-transform duration-200 group-open:rotate-45" />
+          </summary>
+          <p class="pb-6 text-ink-soft"><T v={it.a} /></p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

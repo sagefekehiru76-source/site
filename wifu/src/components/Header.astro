@@ -1,0 +1,71 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import LangSwitch from './LangSwitch.astro';
+import { appHref } from '../lib/links';
+import { localePath, t, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const links = [
+  { href: localePath(lang, '#how'), label: d.nav.how },
+  { href: localePath(lang, '#website'), label: d.nav.website },
+  { href: localePath(lang, '#invites'), label: d.nav.invites },
+  { href: localePath(lang, '#rsvp'), label: d.nav.rsvp },
+  { href: localePath(lang, 'pricing'), label: d.nav.pricing },
+  { href: localePath(lang, '#faq'), label: d.nav.faq },
+];
+---
+<header class="sticky top-0 z-40 border-b border-line/70 bg-paper/95 backdrop-blur-[2px]" data-header>
+  <div class="wrap flex h-16 items-center justify-between gap-4">
+    <a href={localePath(lang)} aria-label={d.nav.home} class="shrink-0"><Logo /></a>
+
+    <nav aria-label="Main" class="hidden lg:block">
+      <ul class="flex items-center gap-6 text-[0.95rem]">
+        {links.map((l) => <li><a href={l.href} class="text-ink-soft transition-colors hover:text-ink">{l.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="hidden items-center gap-3 lg:flex">
+      <LangSwitch lang={lang} />
+      <a href={appHref(lang)} class="btn btn-primary min-h-10 px-5 py-2 text-[0.95rem]">{d.nav.create}</a>
+    </div>
+
+    <button type="button" class="grid size-11 place-items-center rounded-full border border-line lg:hidden" aria-expanded="false" aria-controls="mobile-menu" data-menu-btn>
+      <span class="sr-only" data-open-label>{d.nav.menu}</span>
+      <span class="sr-only hidden" data-close-label>{d.nav.close}</span>
+      <Icon name="menu" size={20} class="menu-open" />
+      <Icon name="x" size={20} class="menu-close hidden" />
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden border-t border-line bg-paper lg:hidden" data-menu>
+    <nav aria-label="Mobile" class="wrap py-4">
+      <ul class="divide-y divide-line/70 text-lg">
+        {links.map((l) => <li><a href={l.href} class="block py-3">{l.label}</a></li>)}
+      </ul>
+      <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
+        <LangSwitch lang={lang} />
+        <a href={appHref(lang)} class="btn btn-primary">{d.nav.create}</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  if (btn && menu) {
+    const set = (open: boolean) => {
+      btn.setAttribute('aria-expanded', String(open));
+      menu.classList.toggle('hidden', !open);
+      btn.querySelector('.menu-open')?.classList.toggle('hidden', open);
+      btn.querySelector('.menu-close')?.classList.toggle('hidden', !open);
+      btn.querySelector('[data-open-label]')?.classList.toggle('hidden', open);
+      btn.querySelector('[data-close-label]')?.classList.toggle('hidden', !open);
+    };
+    btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  }
+</script>

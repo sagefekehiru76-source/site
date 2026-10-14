@@ -1,0 +1,32 @@
+---
+import Icon from '../Icon.astro';
+import { img } from '../../lib/asset';
+import { t, type Lang } from '../../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const g = t(lang).guests;
+---
+<section id="guests" class="bg-paper-2/70 py-20 lg:py-28">
+  <div class="wrap grid gap-14 lg:grid-cols-2 lg:items-center">
+    <div class="relative order-2 lg:order-1" data-reveal>
+      <img src={img('guests-envelopes.jpg')} alt="" width="1200" height="900" loading="lazy" decoding="async" class="aspect-[4/3] w-full rounded-[1.75rem] object-cover" />
+      <div class="relative mx-4 -mt-24 rounded-2xl border border-line bg-card p-5 shadow-[0_24px_50px_-28px_rgb(31_38_56/0.45)] sm:absolute sm:right-6 sm:-bottom-10 sm:mx-0 sm:mt-0 sm:w-80" aria-hidden="true">
+        <p class="font-display text-lg leading-snug">{g.formTitle}</p>
+        <div class="mt-4 space-y-2.5 text-sm">
+          {g.formFields.map((f) => (
+            <div><span class="text-xs text-ink-soft">{f}</span><div class="mt-1 h-9 rounded-lg border border-line bg-paper/60"></div></div>
+          ))}
+        </div>
+        <div class="mt-4 rounded-full bg-ink py-2 text-center text-sm text-paper">{g.formButton}</div>
+      </div>
+    </div>
+    <div class="order-1 lg:order-2">
+      <p class="eyebrow">{g.eyebrow}</p>
+      <h2 class="h2 mt-3">{g.title}</h2>
+      <p class="mt-5 text-lg text-ink-soft">{g.lead}</p>
+      <ul class="mt-8 space-y-3">
+        {g.points.map((p) => <li class="flex items-start gap-3 text-lg"><Icon name="check" size={20} class="mt-1 shrink-0 text-sage-dark" />{p}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>

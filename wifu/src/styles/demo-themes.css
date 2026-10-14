@@ -1,0 +1,74 @@
+/* Design themes for the demo wedding website and invitation.
+   Each theme only sets variables; components read them via var(--t-*). */
+.themed {
+  --t-bg: #faf7f2;
+  --t-surface: #ffffff;
+  --t-fg: #1f2638;
+  --t-muted: #5a5f6e;
+  --t-line: #e4dccf;
+  --t-accent: #a44e33;
+  --t-accent-fg: #ffffff;
+  --t-display: 'Prata', Georgia, serif;
+  --t-display-case: none;
+  --t-display-spacing: -0.01em;
+  --t-radius: 0.75rem;
+  --t-photo-filter: none;
+  --t-swatches: #f1e7da, #d9c7ad, #a44e33, #1f2638;
+  background: var(--t-bg);
+  color: var(--t-fg);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+.themed[data-theme='garden'] {
+  --t-bg: #eef0e6;
+  --t-surface: #f8f8f1;
+  --t-fg: #2b3526;
+  --t-muted: #56634c;
+  --t-line: #d3d8c6;
+  --t-accent: #56634c;
+  --t-accent-fg: #f8f8f1;
+  --t-radius: 1.75rem;
+  --t-photo-filter: saturate(0.85);
+}
+.themed[data-theme='city'] {
+  --t-bg: #1f2638;
+  --t-surface: #283049;
+  --t-fg: #f6f0e6;
+  --t-muted: #b9bccb;
+  --t-line: #3a4360;
+  --t-accent: #d99a7e;
+  --t-accent-fg: #1f2638;
+  --t-display: 'Golos Text Variable', 'Golos Text', system-ui, sans-serif;
+  --t-display-case: uppercase;
+  --t-display-spacing: 0.02em;
+  --t-radius: 0;
+  --t-photo-filter: grayscale(0.35) contrast(1.05);
+}
+.themed .t-display {
+  font-family: var(--t-display);
+  text-transform: var(--t-display-case);
+  letter-spacing: var(--t-display-spacing);
+  font-weight: 400;
+}
+.themed[data-theme='city'] .t-display { font-weight: 650; }
+.themed .t-photo { filter: var(--t-photo-filter); border-radius: var(--t-radius); }
+.themed .t-card { background: var(--t-surface); border: 1px solid var(--t-line); border-radius: var(--t-radius); }
+.themed .t-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  min-height: 3rem; padding: 0.75rem 1.5rem; border-radius: 999px;
+  background: var(--t-accent); color: var(--t-accent-fg); font-weight: 500;
+  transition: filter 0.2s ease;
+}
+.themed[data-theme='city'] .t-btn { border-radius: 0; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.9rem; }
+.themed .t-btn:hover { filter: brightness(1.08); }
+.themed .t-btn-ghost { background: transparent; color: var(--t-fg); border: 1px solid currentColor; }
+.themed .t-muted { color: var(--t-muted); }
+.themed .t-accent { color: var(--t-accent); }
+.themed .t-line { border-color: var(--t-line); }
+.themed .field { background: var(--t-surface); border-color: var(--t-line); color: var(--t-fg); }
+.themed .field:focus { border-color: var(--t-fg); }
+.themed .label { color: var(--t-fg); }
+.themed :focus-visible { outline-color: var(--t-accent); }
+
+/* Garden: a quiet leaf sprig used as a divider. */
+.themed .t-sprig { display: none; }
+.themed[data-theme='garden'] .t-sprig { display: block; }

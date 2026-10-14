@@ -1,0 +1,13 @@
+---
+// A simple phone outline. Content inside is drawn in HTML so it stays sharp and translated.
+interface Props { label: string; class?: string; image?: string | null }
+const { label, class: cls = '', image } = Astro.props;
+// Default width unless the caller sets its own (avoids two conflicting width classes).
+const width = /(^|\s)w-/.test(cls) ? '' : 'w-[15.5rem]';
+---
+<div class:list={[width, 'shrink-0 rounded-[2.4rem] bg-ink p-[9px] shadow-[0_30px_60px_-25px_rgb(31_38_56/0.55)]', cls]} role="img" aria-label={label}>
+  <div class="relative aspect-[9/19] overflow-hidden rounded-[1.9rem] bg-paper">
+    {image ? <img src={image} alt="" class="size-full object-cover" loading="lazy" decoding="async" /> : <slot />}
+    <div class="absolute top-2 left-1/2 h-[18px] w-20 -translate-x-1/2 rounded-full bg-ink"></div>
+  </div>
+</div>

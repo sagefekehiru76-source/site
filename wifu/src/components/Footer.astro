@@ -1,0 +1,66 @@
+---
+import Logo from './Logo.astro';
+import LangSwitch from './LangSwitch.astro';
+import SocialLinks from './SocialLinks.astro';
+import T from './T.astro';
+import { brand } from '../config';
+import { localePath, t, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const f = d.footer;
+const cols = [
+  { title: f.product, links: [
+    { href: localePath(lang, '#website'), label: d.nav.website },
+    { href: localePath(lang, '#invites'), label: d.nav.invites },
+    { href: localePath(lang, '#rsvp'), label: d.nav.rsvp },
+    { href: localePath(lang, 'pricing'), label: d.nav.pricing },
+  ] },
+  { title: f.help, links: [
+    { href: localePath(lang, '#faq'), label: d.nav.faq },
+    { href: localePath(lang, 'demo'), label: f.demoSite },
+    { href: localePath(lang, 'demo/invite'), label: f.demoInvite },
+    { href: localePath(lang, '#contact'), label: f.contact },
+  ] },
+  { title: f.legal, links: [
+    { href: localePath(lang, 'privacy'), label: f.privacy },
+    { href: localePath(lang, 'terms'), label: f.terms },
+  ] },
+];
+const year = new Date().getFullYear();
+---
+<footer class="bg-ink text-paper">
+  <div class="airmail"></div>
+  <div class="wrap grid gap-12 py-14 md:grid-cols-[1.3fr_2fr]">
+    <div class="space-y-5">
+      <Logo light />
+      <p class="max-w-xs text-paper/75">{f.tagline}</p>
+      <div>
+        <p class="mb-3 text-sm text-paper/60">{f.follow}</p>
+        <SocialLinks />
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
+      {cols.map((c) => (
+        <div>
+          <h2 class="mb-4 font-sans text-sm font-medium text-paper/60">{c.title}</h2>
+          <ul class="space-y-2.5">
+            {c.links.map((l) => <li><a href={l.href} class="text-paper/90 hover:text-paper hover:underline underline-offset-4">{l.label}</a></li>)}
+          </ul>
+        </div>
+      ))}
+      <div class="col-span-2 sm:col-span-3">
+        <h2 class="mb-2 font-sans text-sm font-medium text-paper/60">{f.contact}</h2>
+        <p class="text-paper/90 [&_.todo]:border-paper/50 [&_.todo]:text-paper/85 [&_.todo]:bg-paper/5">
+          {brand.email.startsWith('TODO') ? <T v={brand.email} /> : <a href={`mailto:${brand.email}`} class="hover:underline">{brand.email}</a>}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-paper/15">
+    <div class="wrap flex flex-col gap-4 py-6 text-sm text-paper/65 md:flex-row md:items-center md:justify-between [&_.todo]:border-paper/40 [&_.todo]:text-paper/80 [&_.todo]:bg-paper/5">
+      <p>© {year} {brand.legalName.replace(/\.$/, "")}. {f.rights} <T v={brand.address} /></p>
+      <LangSwitch lang={lang} class="[&_span[aria-current]]:bg-paper [&_span[aria-current]]:text-ink [&_a]:text-paper/75 [&_a:hover]:bg-paper/10 [&_a:hover]:text-paper" />
+    </div>
+  </div>
+</footer>

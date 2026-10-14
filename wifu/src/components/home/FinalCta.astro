@@ -1,0 +1,51 @@
+---
+import Icon from '../Icon.astro';
+import { appHref } from '../../lib/links';
+import { formAttrs } from '../../lib/forms';
+import { localePath, t, type Lang } from '../../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = t(lang).cta;
+const attrs = formAttrs('contact', localePath(lang, 'thanks'));
+---
+<section id="contact" class="border-t border-line bg-paper-2/70 py-20 lg:py-28">
+  <div id="get-started" class="wrap grid gap-12 lg:grid-cols-2 lg:items-start">
+    <div class="lg:pt-6">
+      <h2 class="text-4xl sm:text-5xl lg:text-6xl">{c.title}</h2>
+      <p class="mt-5 text-lg text-ink-soft">{c.lead}</p>
+      <a href={appHref(lang)} class="btn btn-primary mt-8">{c.primary}<Icon name="arrow-right" size={18} /></a>
+    </div>
+
+    <div class="relative" data-form-root>
+      <!-- the form sits on a "letter" with an envelope flap on top -->
+      <div aria-hidden="true" class="mx-6 h-10 bg-line/70 [clip-path:polygon(0_100%,50%_0,100%_100%)]"></div>
+      <div class="card p-6 sm:p-8">
+        <h3 class="text-2xl">{c.formTitle}</h3>
+        <form {...attrs} data-form class="mt-6 space-y-4">
+          <input type="hidden" name="form-name" value="contact" />
+          <input type="hidden" name="language" value={lang} />
+          <p class="hidden"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+          <div>
+            <label for="c-name" class="label">{c.name}</label>
+            <input id="c-name" name="name" class="field" autocomplete="name" required />
+          </div>
+          <div>
+            <label for="c-email" class="label">{c.email}</label>
+            <input id="c-email" name="email" type="email" class="field" autocomplete="email" required />
+          </div>
+          <div>
+            <label for="c-message" class="label">{c.message}</label>
+            <textarea id="c-message" name="message" rows="4" class="field" placeholder={c.messagePlaceholder} required></textarea>
+          </div>
+          <p class="text-sm text-ink-soft">{c.privacyNote}</p>
+          <button type="submit" class="btn btn-primary w-full sm:w-auto" data-sending={c.sending}>{c.submit}</button>
+        </form>
+        <p data-error class="mt-4 hidden text-sm text-terra" role="alert">{c.error}</p>
+        <div data-success class="hidden py-6" tabindex="-1" role="status">
+          <p class="flex items-center gap-2 font-display text-2xl"><Icon name="check" size={24} class="text-sage-dark" />{c.success}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>import '../../scripts/forms';</script>

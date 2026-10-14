@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/home/Hero.astro';
+import HowItWorks from '../components/home/HowItWorks.astro';
+import WebsiteSection from '../components/home/WebsiteSection.astro';
+import InvitesSection from '../components/home/InvitesSection.astro';
+import RsvpSection from '../components/home/RsvpSection.astro';
+import GuestsSection from '../components/home/GuestsSection.astro';
+import ForGuests from '../components/home/ForGuests.astro';
+import PricingTeaser from '../components/home/PricingTeaser.astro';
+import Faq from '../components/home/Faq.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+import { t, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+---
+<Base lang={lang} title={d.meta.home.title} description={d.meta.home.description}>
+  <Header lang={lang} />
+  <main id="main">
+    <Hero lang={lang} />
+    <HowItWorks lang={lang} />
+    <WebsiteSection lang={lang} />
+    <InvitesSection lang={lang} />
+    <RsvpSection lang={lang} />
+    <GuestsSection lang={lang} />
+    <ForGuests lang={lang} />
+    <PricingTeaser lang={lang} />
+    <Faq lang={lang} />
+    <FinalCta lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Base>

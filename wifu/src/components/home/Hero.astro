@@ -1,0 +1,37 @@
+---
+import PhoneSite from '../mockups/PhoneSite.astro';
+import Icon from '../Icon.astro';
+import { appHref } from '../../lib/links';
+import { img } from '../../lib/asset';
+import { localePath, t, type Lang } from '../../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const h = t(lang).hero;
+---
+<section class="relative overflow-hidden">
+  <div class="wrap grid items-center gap-12 pt-10 pb-16 sm:pt-14 lg:grid-cols-[1.1fr_1fr] lg:gap-10 lg:pt-20 lg:pb-24">
+    <div class="max-w-xl">
+      <h1 class="text-[2.3rem] leading-[1.1] min-[400px]:text-[2.55rem] sm:text-6xl lg:text-[4.1rem]">
+        {h.title} <span class="scribble text-terra">{h.titleAccent}</span>
+      </h1>
+      <p class="mt-7 text-lg text-ink-soft sm:text-xl">{h.lead}</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href={appHref(lang)} class="btn btn-primary">{h.ctaPrimary}<Icon name="arrow-right" size={18} /></a>
+        <a href={localePath(lang, 'demo')} class="btn btn-ghost">{h.ctaSecondary}</a>
+      </div>
+      <p class="mt-5 flex items-center gap-2 text-sm text-ink-soft"><Icon name="check" size={16} class="text-sage-dark" />{h.note}</p>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-md pt-6 sm:pt-0 lg:mr-0">
+      <img
+        src={img('hero-couple.jpg')}
+        alt={h.photoAlt}
+        width="1200" height="1500"
+        class="ml-auto block aspect-[4/5] w-[80%] rounded-[1.75rem] object-cover"
+        fetchpriority="high" decoding="async"
+      />
+      <span class="absolute top-5 right-4 rounded-full bg-paper/95 px-3 py-1.5 text-xs text-ink-soft shadow-sm">{h.tag}</span>
+      <PhoneSite lang={lang} label={h.tag} class="absolute -bottom-8 left-0 origin-bottom-left rotate-[-4deg] scale-[0.64] sm:scale-[0.8]" />
+    </div>
+  </div>
+</section>

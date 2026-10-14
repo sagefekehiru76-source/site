@@ -1,0 +1,15 @@
+---
+// Wordmark: a small envelope with a wax-seal dot + "Wifu" in the heading serif.
+import { brand } from '../config';
+interface Props { class?: string; light?: boolean }
+const { class: cls = '', light = false } = Astro.props;
+---
+<span class:list={['inline-flex items-center gap-2', cls]}>
+  <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+    <rect width="64" height="64" rx="14" fill={light ? '#f6f0e6' : '#1f2638'} />
+    <rect x="12" y="19" width="40" height="28" rx="3" fill={light ? '#1f2638' : '#f6f0e6'} />
+    <path d="M12.5 20 L32 35 L51.5 20" fill="none" stroke={light ? '#f6f0e6' : '#1f2638'} stroke-width="3" stroke-linejoin="round" />
+    <circle cx="32" cy="36" r="6" fill="#b4593c" />
+  </svg>
+  <span class="font-display text-[1.6rem] leading-none">{brand.name}</span>
+</span>

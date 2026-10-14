@@ -1,0 +1,17 @@
+---
+import { languages, switchPath, t, type Lang } from '../i18n';
+interface Props { lang: Lang; class?: string }
+const { lang, class: cls = '' } = Astro.props;
+const path = Astro.url.pathname;
+---
+<nav aria-label={t(lang).nav.language} class:list={['flex items-center gap-1 text-sm', cls]}>
+  {(Object.keys(languages) as Lang[]).map((l) => (
+    l === lang ? (
+      <span aria-current="true" class="rounded-full bg-ink px-2.5 py-1 font-medium text-paper">{languages[l]}</span>
+    ) : (
+      <a href={switchPath(path, l)} hreflang={l} lang={l} class="rounded-full px-2.5 py-1 font-medium text-ink-soft hover:bg-paper-2 hover:text-ink">
+        <span class="sr-only">{t(l).langName}: </span>{languages[l]}
+      </a>
+    )
+  ))}
+</nav>

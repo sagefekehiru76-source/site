@@ -1,0 +1,23 @@
+---
+import Icon from '../Icon.astro';
+import T from '../T.astro';
+import { localePath, t, type Lang } from '../../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const p = t(lang).pricingTeaser;
+---
+<section class="py-20 lg:py-24">
+  <div class="wrap">
+    <div class="relative overflow-hidden rounded-[1.5rem] border border-line bg-card p-8 sm:p-12" data-reveal>
+      <div class="airmail absolute inset-x-0 top-0"></div>
+      <!-- stamp -->
+      <div aria-hidden="true" class="absolute top-8 right-8 hidden h-24 w-20 rotate-3 rounded-sm border-2 border-dashed border-terra/50 p-1.5 sm:block">
+        <div class="grid size-full place-items-center bg-sage/30 font-display text-2xl text-sage-dark">W</div>
+      </div>
+      <p class="eyebrow">{p.eyebrow}</p>
+      <h2 class="h2 mt-3 max-w-2xl">{p.title}</h2>
+      <p class="mt-5 max-w-2xl text-lg text-ink-soft"><T v={p.lead} /></p>
+      <a href={localePath(lang, 'pricing')} class="btn btn-ghost mt-8">{p.link}<Icon name="arrow-right" size={18} /></a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,82 @@
+---
+import '@fontsource/prata';
+import '@fontsource-variable/golos-text';
+import '../styles/global.css';
+import { brand } from '../config';
+import { languages, switchPath, t, type Lang } from '../i18n';
+import { asset } from '../lib/asset';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Path in /public, e.g. "images/og-invite.jpg". Defaults to the site-wide image for this language. */
+  ogImage?: string;
+  noindex?: boolean;
+  /** Extra JSON-LD for this page. */
+  jsonLd?: Record<string, unknown>;
+}
+const { lang, title, description, ogImage, noindex = false, jsonLd } = Astro.props;
+const d = t(lang);
+const site = Astro.site!;
+const canonical = new URL(Astro.url.pathname, site).href;
+const og = new URL(asset(ogImage ?? (lang === 'ru' ? 'images/og-default-ru.jpg' : 'images/og-default.jpg')), site).href;
+const alternates = (Object.keys(languages) as Lang[]).map((l) => ({ l, href: new URL(switchPath(Astro.url.pathname, l), site).href }));
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: brand.name,
+  legalName: brand.legalName,
+  url: site.href,
+  logo: new URL('/apple-touch-icon.png', site).href,
+};
+---
+<!doctype html>
+<html lang={lang} class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.l} href={a.href} />)}
+    <link rel="alternate" hreflang="x-default" href={alternates[0].href} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#f6f0e6" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={brand.name} />
+    <meta property="og:locale" content={d.ogLocale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script is:inline>document.documentElement.classList.replace('no-js', 'js');</script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd ?? org)} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a href="#main" class="sr-only z-50 rounded-full bg-ink px-4 py-2 text-paper focus:not-sr-only focus:fixed focus:top-3 focus:left-3">{d.nav.skip}</a>
+    <slot />
+    <script>
+      // Reveal sections softly as they scroll into view.
+      const els = document.querySelectorAll('[data-reveal]');
+      if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const io = new IntersectionObserver((entries) => {
+          for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+        }, { rootMargin: '0px 0px -8% 0px' });
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-in'));
+      }
+    </script>
+  </body>
+</html>

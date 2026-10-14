@@ -1,0 +1,92 @@
+---
+import T from '../T.astro';
+import { formAttrs } from '../../lib/forms';
+import { localePath, t, type Lang } from '../../i18n';
+interface Props { lang: Lang; idPrefix?: string }
+const { lang, idPrefix = 'r' } = Astro.props;
+const f = t(lang).rsvpForm;
+const attrs = formAttrs('rsvpDemo', localePath(lang, 'thanks'));
+const id = (s: string) => `${idPrefix}-${s}`;
+---
+<div data-form-root data-rsvp class="t-card p-6 text-left sm:p-8">
+  <form {...attrs} data-form class="space-y-5">
+    <input type="hidden" name="form-name" value="rsvpDemo" />
+    <input type="hidden" name="language" value={lang} />
+    <p class="hidden"><label>Leave empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+    <div>
+      <label for={id('name')} class="label">{f.name}</label>
+      <input id={id('name')} name="name" class="field" autocomplete="name" required />
+    </div>
+
+    <fieldset>
+      <legend class="label">{f.attending}</legend>
+      <div class="grid gap-2 sm:grid-cols-2">
+        {[['yes', f.yes], ['no', f.no]].map(([v, l], i) => (
+          <label class="t-line flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 has-checked:border-current has-checked:font-medium">
+            <input type="radio" name="attending" value={v} required checked={i === 0} class="size-4 accent-[var(--t-accent)]" />{l}
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
+    <div data-yes-only class="space-y-5">
+      <div>
+        <label class="flex cursor-pointer items-center gap-3">
+          <input type="checkbox" name="plus_one" value="yes" class="size-4 accent-[var(--t-accent)]" data-plus-one />{f.plusOne}
+        </label>
+        <div class="mt-3 hidden" data-plus-one-name>
+          <label for={id('plus-name')} class="label">{f.plusOneName}</label>
+          <input id={id('plus-name')} name="plus_one_name" class="field" />
+        </div>
+      </div>
+
+      <fieldset>
+        <legend class="label">{f.meal}</legend>
+        <div class="flex flex-wrap gap-2">
+          {f.meals.map((m, i) => (
+            <label class="t-line flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-4 py-2 has-checked:border-current has-checked:font-medium">
+              <input type="radio" name="meal" value={m} checked={i === 0} class="size-4 accent-[var(--t-accent)]" />{m}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    </div>
+
+    <div>
+      <label for={id('comment')} class="label">{f.allergies}</label>
+      <textarea id={id('comment')} name="comment" rows="3" class="field"></textarea>
+    </div>
+
+    <button type="submit" class="t-btn w-full sm:w-auto" data-sending={f.sending}>{f.send}</button>
+    <p class="text-sm t-muted"><T v={f.demoNote} /></p>
+  </form>
+  <p data-error class="mt-4 hidden text-sm t-accent" role="alert">{f.error}</p>
+  <div data-success class="hidden py-4 text-center" tabindex="-1" role="status">
+    <p class="t-display text-4xl">{f.thanksTitle}</p>
+    <p class="mt-3 text-lg t-muted" data-thanks-yes>{f.thanksYes}</p>
+    <p class="mt-3 hidden text-lg t-muted" data-thanks-no>{f.thanksNo}</p>
+    <button type="button" class="t-btn t-btn-ghost mt-6" data-reset>{f.again}</button>
+  </div>
+</div>
+<script>
+  import '../../scripts/forms';
+  for (const root of document.querySelectorAll<HTMLElement>('[data-rsvp]')) {
+    const form = root.querySelector('form')!;
+    const yesOnly = root.querySelector<HTMLElement>('[data-yes-only]')!;
+    const plus = root.querySelector<HTMLInputElement>('[data-plus-one]')!;
+    const plusName = root.querySelector<HTMLElement>('[data-plus-one-name]')!;
+    const sync = () => {
+      const yes = (form.elements.namedItem('attending') as RadioNodeList).value !== 'no';
+      yesOnly.classList.toggle('hidden', !yes);
+      plusName.classList.toggle('hidden', !(yes && plus.checked));
+    };
+    form.addEventListener('change', sync);
+    sync();
+    root.addEventListener('form:success', (e) => {
+      const yes = (e as CustomEvent<FormData>).detail.get('attending') !== 'no';
+      root.querySelector('[data-thanks-yes]')!.classList.toggle('hidden', !yes);
+      root.querySelector('[data-thanks-no]')!.classList.toggle('hidden', yes);
+    });
+  }
+</script>

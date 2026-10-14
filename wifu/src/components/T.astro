@@ -1,0 +1,11 @@
+---
+// Renders copy and turns TODO markers into visible placeholder chips:
+//   "TODO: …"             → the whole string is a chip
+//   "text (TODO: …) text" → the parenthetical is a chip
+//   "text TODO: … . text" → the TODO up to the next full stop is a chip
+import { isTodo } from '../i18n';
+interface Props { v: string }
+const { v } = Astro.props as Props;
+const parts = isTodo(v) ? [v] : v.split(/\((TODO[^)]*)\)|(TODO(?::[^.]*)?\.?)/).filter((p) => p !== undefined && p !== '');
+---
+{parts.map((p) => (isTodo(p) ? <span class="todo">{p.trim()}</span> : p))}

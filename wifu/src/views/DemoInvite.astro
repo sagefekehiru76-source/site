@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import DemoBar from '../components/demo/DemoBar.astro';
+import ThemeSwitch from '../components/demo/ThemeSwitch.astro';
+import RsvpForm from '../components/demo/RsvpForm.astro';
+import Icon from '../components/Icon.astro';
+import '../styles/demo-themes.css';
+import { appHref } from '../lib/links';
+import { localePath, t, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const v = d.invite;
+---
+<Base lang={lang} title={d.meta.invite.title} description={d.meta.invite.description} ogImage={lang === 'ru' ? 'images/og-invite-ru.jpg' : 'images/og-invite.jpg'}>
+  <DemoBar lang={lang} text={d.demo.banner} />
+  <div class="themed min-h-screen" data-theme="minimal">
+    <main id="main" class="wrap flex flex-col items-center pt-10 pb-32 sm:pt-16">
+      <!-- Envelope. Clicking it opens the flap and slides the card up (one CSS transition). -->
+      <div class="invite" data-invite>
+        <button type="button" class="invite__envelope" aria-expanded="false" aria-controls="invite-card" data-open>
+          <span class="invite__back" aria-hidden="true"></span>
+          <span class="invite__card-peek" aria-hidden="true"><span class="t-display">{v.names}</span></span>
+          <span class="invite__front" aria-hidden="true"></span>
+          <span class="invite__flap" aria-hidden="true"></span>
+          <span class="invite__seal" aria-hidden="true">{v.names.slice(0, 1)}</span>
+          <span class="invite__to">{v.to}</span>
+          <span class="sr-only">{v.open}</span>
+        </button>
+        <p class="invite__hint t-muted mt-6 text-center text-sm">{v.tapHint}</p>
+      </div>
+
+      <article id="invite-card" class="invite-card t-card relative w-full max-w-md px-7 py-12 text-center sm:px-12" data-card>
+        <p class="t-muted text-sm tracking-wide">{v.kicker}</p>
+        <h1 class="t-display mt-5 text-5xl leading-tight sm:text-6xl">{v.names}</h1>
+        <svg class="t-accent mx-auto mt-4" width="140" height="14" viewBox="0 0 200 14" aria-hidden="true"><path d="M3 9 C 40 3, 90 12, 130 6 S 185 5, 197 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+        <p class="mt-4 text-lg">{v.line}</p>
+        <div class="t-line mt-8 space-y-1 border-y py-6">
+          <p class="t-display text-2xl">{v.date}</p>
+          <p>{v.time}</p>
+          <p class="t-muted">{v.place}</p>
+        </div>
+        <p class="t-muted mt-6 text-sm">{v.rsvpBy}</p>
+        <div class="mt-6 flex flex-col gap-3">
+          <a href="#rsvp" class="t-btn">{v.rsvp}</a>
+          <div class="grid gap-3 min-[400px]:grid-cols-2">
+            <a href={localePath(lang, 'demo')} class="t-btn t-btn-ghost px-3 text-sm"><Icon name="heart" size={16} />{v.details}</a>
+            <a href="/demo/mira-and-daniel.ics" download class="t-btn t-btn-ghost px-3 text-sm"><Icon name="calendar" size={16} />{v.calendar}</a>
+          </div>
+        </div>
+      </article>
+
+      <section id="rsvp" class="mt-16 w-full max-w-xl scroll-mt-6" aria-labelledby="rsvp-title">
+        <h2 id="rsvp-title" class="t-display text-center text-4xl">{v.rsvpTitle}</h2>
+        <div class="mt-8"><RsvpForm lang={lang} idPrefix="invite" /></div>
+      </section>
+
+      <p class="t-muted mt-16 text-center text-sm">{v.madeWith} <a href={appHref(lang)} class="underline underline-offset-4">{v.makeYours}</a></p>
+    </main>
+    <ThemeSwitch label={v.themeLabel} themes={d.demo.themes} class="fixed bottom-4 left-1/2 z-30 -translate-x-1/2" />
+  </div>
+</Base>
+
+<style is:global>
+  /* ---- Envelope ---- */
+  .invite { width: min(100%, 22rem); }
+  .invite__envelope {
+    position: relative; display: block; width: 100%; aspect-ratio: 7 / 5; cursor: pointer;
+    perspective: 900px; margin-top: 7rem;
+  }
+  .invite__back, .invite__front, .invite__flap { position: absolute; inset: 0; }
+  .invite__back { background: color-mix(in oklab, var(--t-accent) 22%, var(--t-surface)); border-radius: 6px; }
+  .invite__front {
+    background: color-mix(in oklab, var(--t-accent) 14%, var(--t-surface));
+    clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%);
+    border-radius: 6px; z-index: 3;
+    box-shadow: 0 30px 50px -30px rgb(0 0 0 / 0.45);
+  }
+  .invite__flap {
+    height: 56%; z-index: 4; transform-origin: top center;
+    background: color-mix(in oklab, var(--t-accent) 30%, var(--t-surface));
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transition: transform 0.6s var(--ease-soft), z-index 0s 0.3s;
+  }
+  .invite__seal {
+    position: absolute; left: 50%; top: 56%; z-index: 5; translate: -50% -50%;
+    display: grid; place-items: center; width: 3.2rem; height: 3.2rem; border-radius: 999px;
+    background: var(--t-accent); color: var(--t-accent-fg); font-family: var(--t-display); font-size: 1.4rem;
+    box-shadow: inset 0 0 0 3px color-mix(in oklab, var(--t-accent-fg) 25%, transparent);
+    transition: opacity 0.3s ease, scale 0.3s ease;
+  }
+  .invite__to { position: absolute; left: 0; right: 0; bottom: 12%; z-index: 5; text-align: center; font-size: 0.95rem; color: var(--t-fg); }
+  .invite__card-peek {
+    position: absolute; left: 7%; right: 7%; top: 6%; bottom: 6%; z-index: 2;
+    display: grid; place-items: start center; padding-top: 1.2rem;
+    background: var(--t-surface); border-radius: 4px; font-size: 1.4rem;
+    transition: transform 0.7s var(--ease-soft) 0.25s;
+  }
+  .invite__envelope:hover .invite__flap { transform: rotateX(18deg); }
+  .invite__envelope:focus-visible { outline-offset: 8px; }
+
+  .invite.is-open .invite__flap { transform: rotateX(180deg); z-index: 1; }
+  .invite.is-open .invite__seal { opacity: 0; scale: 0.6; }
+  .invite.is-open .invite__card-peek { transform: translateY(-62%); }
+
+  /* The full card appears under the envelope after it opens. Without JS it is simply visible. */
+  .js .invite-card { opacity: 0; transform: translateY(24px); pointer-events: none; transition: opacity 0.6s ease 0.5s, transform 0.6s var(--ease-soft) 0.5s; }
+  .js .invite.is-open + .invite-card { opacity: 1; transform: none; pointer-events: auto; }
+  .no-js .invite { display: none; }
+  .invite-card { margin-top: 2.5rem; }
+  .js .invite.is-open .invite__hint { visibility: hidden; }
+  .js .invite-card:not(.is-shown) ~ #rsvp { display: none; }
+</style>
+
+<script>
+  const wrap = document.querySelector<HTMLElement>('[data-invite]');
+  const btn = wrap?.querySelector<HTMLButtonElement>('[data-open]');
+  const card = document.querySelector<HTMLElement>('[data-card]');
+  const open = () => {
+    wrap!.classList.add('is-open');
+    btn!.setAttribute('aria-expanded', 'true');
+    card!.classList.add('is-shown');
+    setTimeout(() => card!.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }), 900);
+  };
+  btn?.addEventListener('click', open);
+  // Links to #rsvp (e.g. from a reminder message) open the invitation straight away.
+  if (location.hash === '#rsvp') open();
+</script>
